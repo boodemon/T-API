@@ -26,4 +26,6 @@ Route::group(['middleware'=>'api'],function(){
 
         Route::resource('auth0','Api\Auth0Controller');
         Route::resource('admin','Api\AdminController');
+        Route::resource('category','Api\CategoryController');
+        Route::resource('restourant','Api\RestourantController');
 });
