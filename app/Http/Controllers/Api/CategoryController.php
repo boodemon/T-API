@@ -42,7 +42,8 @@ class CategoryController extends Controller
         $row->active = ($request->exists('active') && $request->input('active') == 1 ) ? 'Y':'N';
        	if( $request->input('image')){
             $filename = time() . Lib::ext(  $request->input('image.filename') );
-            file_put_contents($this->path . $filename, base64_decode($request->input('image.value')));
+            //file_put_contents($this->path . $filename, base64_decode($request->input('image.value')));
+            Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
             $row->image = $filename;
         }      
         if( $row->save() ){
@@ -84,7 +85,8 @@ class CategoryController extends Controller
             $row->active = ($request->exists('active') && $request->input('active') == 1 ) ? 'Y':'N';
             if( $request->input('image')){
                 $filename = time() . Lib::ext(  $request->input('image.filename') );
-                file_put_contents($this->path . $filename, base64_decode($request->input('image.value')));
+                Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
+                //file_put_contents($this->path . $filename, base64_decode($request->input('image.value')));
 
                 File::delete( $this->path . $row->image );
                 $row->image = $filename;

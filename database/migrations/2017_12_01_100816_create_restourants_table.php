@@ -17,6 +17,7 @@ class CreateRestourantsTable extends Migration
             $table->string('restourant');
             $table->string('contact');
             $table->string('tel',64);
+            $table->string('image');
             $table->enum('active',['N','Y']);
             $table->timestamps();
         });

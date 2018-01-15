@@ -16,7 +16,7 @@ class RestourantController extends Controller
     public function __construct(){
         $this->category_path = public_path().'/images/category/';
         $this->restourant_path = public_path() .'/images/restourant/';
-        echo '<pre>',print_r( Auth::guard('web')->user() ). '</pre>';
+        //echo '<pre>Auth user : ',print_r( Auth::guard('web')->user() ). '</pre>';
     }
 
     public function index(){
@@ -58,6 +58,13 @@ class RestourantController extends Controller
         $row->contact = $request->input('contact');
         $row->tel = $request->input('tel');
         $row->active = $request->input('active') == '1' ? 'Y' : 'N';
+        if( $request->input('image')){
+            $filename = time() . Lib::ext(  $request->input('image.filename') );
+            Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
+            File::delete( $this->path . $row->image );
+            $row->image = $filename;
+        }      
+
         if( $row->save() ){
             $res = [
                 'resule'    => 'successful',
@@ -73,4 +80,57 @@ class RestourantController extends Controller
         return response()->json( $res );
     }
 
+    public function update(Request $request , $id ){
+        $row = Restourant::where('id',$id)->first();
+        if( $row ){
+                $row->restourant = $request->input('restourant');
+                $row->contact = $request->input('contact');
+                $row->tel = $request->input('tel');
+                $row->active = $request->input('active') == '1' ? 'Y' : 'N';
+                if( $request->input('image')){
+                    $filename = time() . Lib::ext(  $request->input('image.filename') );
+                    Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
+                    File::delete( $this->path . $row->image );
+                    $row->image = $filename;
+                }      
+
+                if( $row->save() ){
+                    $res = [
+                        'resule'    => 'successful',
+                        'data'      => $row
+                    ];
+                }else{
+                    $res = [
+                        'result'    => 'error',
+                        'data'      => false,
+                        'msg'       => 'Error!! Cannot save this. Please try again.'
+                    ];
+                }
+        }else{
+            $res = [
+                'result'    => 'error',
+                'data'      => false,
+                'msg'       => 'Error!! Restourant not found. Please try again.'
+            ];
+        }
+        return response()->json( $res );
+    }
+
+    public function destroy($id)
+    {
+        $ids = explode('-',$id);
+ 
+            if( Restourant::whereIn('id',$ids)->delete() ){
+                $result = [
+                    'result'    => 'successful',
+                ];
+            }else{
+                $result = [
+                    'result'    => 'error',
+                    'msg'       => 'เกิดข้อผิดพลาดจากระบบไม่สามารถทำการลบข้อมูลได้ โปรดลองใหม่ภายหลัง'
+                ];
+    
+            }
+        return Response()->json($result);
+    }
 }

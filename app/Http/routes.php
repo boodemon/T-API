@@ -17,13 +17,14 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 
 Route::get('/', function () {
     return view('welcome');
-});
-Route::group(['middleware'=>'api'],function(){
-        Route::post('auth/login','Api\AuthController@login');
-        Route::post('auth/signin','Api\AuthController@signin');
-        Route::get('auth/token','Api\AuthController@token');
-        Route::get('auth/check','Api\AuthController@check');
+});        
 
+Route::get('auth/token','Api\AuthController@token');
+Route::post('auth/login','Api\AuthController@login');
+
+Route::group(['middleware'=>'webservice'],function(){
+        Route::post('auth/signin','Api\AuthController@signin');
+        Route::get('auth/check','Api\AuthController@check');
         Route::resource('auth0','Api\Auth0Controller');
         Route::resource('admin','Api\AdminController');
         Route::resource('category','Api\CategoryController');

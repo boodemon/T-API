@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-class Api
+
+class Webservice
 {
     /**
      * Handle an incoming request.
