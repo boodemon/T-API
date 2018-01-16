@@ -17,16 +17,17 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 
 
 Route::group(['middleware'=>'cors'],function(){
-
-    Route::get('/', function () {
-        return view('welcome');
-    });        
-    Route::get('auth/token','Api\AuthController@token');
     Route::post('auth/login','Api\AuthController@login');
+    Route::group(['middleware' => 'jwt-auth'],function(){
+
+        Route::get('/', function () {
+            return view('welcome');
+        });        
         Route::post('auth/signin','Api\AuthController@signin');
         Route::get('auth/check','Api\AuthController@check');
         Route::resource('auth0','Api\Auth0Controller');
         Route::resource('admin','Api\AdminController');
         Route::resource('category','Api\CategoryController');
         Route::resource('restourant','Api\RestourantController');
+    });
 });
