@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Auth;
+use JWTAuth;
 use App\User;
 use Request as Req;
 
@@ -21,12 +21,14 @@ class AuthController extends Controller
 				$email 	= ['email' => $user, 'password' => $password];
 				$username 	= ['username' => $user, 'password' => $password];
 				$result = [];
-				if( Auth::guard('web')->attempt($email) || Auth::guard('web')->attempt($username) ){
-					User::where('id',Auth::guard('web')->user()->id)->update(['remember_token' => $request->input('token')]);
-					Auth::guard('web')->user()->token = $request->input('token');
+				if($token = JWTAuth::attempt($username) ){
+					
+					User::where('username',$user)->update(['remember_token' => $token ]);
+					// Auth::guard('web')->user()->token = $request->input('token');
+					//echo '<pre>',print_r( $token ),'</pre>';
 					$result = [
-						'result' => 'success' , 
-						'auth' => Auth::guard('web')->user() 
+						'result' => 'successful' , 
+						'auth' => $token
 					];
 				}else{
 					$result = ['result' => 'error','message' => 'Username or Password fails Please try again'];
@@ -64,11 +66,17 @@ class AuthController extends Controller
 		}
 
 		public function check(Request $request){
-				//echo '<pre>',print_r($request->all()),'</pre>';
-				$row = User::where('username',$request->input('username') )
-									 ->where('remember_token', $request->input('token') )
-									 ->first();
-				$result = $row ? 'true':'false';
-				return Response()->json(['result' => $result ]);
+				if($user = JWTAuth::toUser($request->input('token'))){
+					$result = [
+						'result' 	=> 'successful',
+						'data'		=> $user
+					];
+				}else{
+					$result = [
+						'result' 	=> 'error',
+						'data'		=> false
+					];
+				}
+				return Response()->json($result);
 		}
 }

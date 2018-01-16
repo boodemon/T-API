@@ -15,14 +15,14 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});        
 
-Route::get('auth/token','Api\AuthController@token');
-Route::post('auth/login','Api\AuthController@login');
+Route::group(['middleware'=>'cors'],function(){
 
-Route::group(['middleware'=>'webservice'],function(){
+    Route::get('/', function () {
+        return view('welcome');
+    });        
+    Route::get('auth/token','Api\AuthController@token');
+    Route::post('auth/login','Api\AuthController@login');
         Route::post('auth/signin','Api\AuthController@signin');
         Route::get('auth/check','Api\AuthController@check');
         Route::resource('auth0','Api\Auth0Controller');

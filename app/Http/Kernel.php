@@ -46,12 +46,14 @@ class Kernel extends HttpKernel
      */
 
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'api'  => \App\Http\Middleware\Api::class,
-        'webservice'  => \App\Http\Middleware\Webservice::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth'      => \App\Http\Middleware\Authenticate::class,
+        'cors'       => \App\Http\Middleware\Cors::class,
+        'apis'       => \App\Http\Middleware\Api::class,
+        'webservice'=> \App\Http\Middleware\Webservice::class,
+        'auth.basic'=> \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'       => \Illuminate\Foundation\Http\Middleware\Authorize::class,
+        'guest'     => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'  => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'jwt-auth'  => \App\Http\Middleware\authJWT::class,
     ];
 }

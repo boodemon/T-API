@@ -45,6 +45,15 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'jwt' => [
+            'driver' => 'jwt-auth',
+            'provider' => 'users',
+        ],
+        'mobile' => [
+            'driver' => 'jwt-auth',
+            'provider' => 'members',
+        ]
     ],
 
     /*
@@ -66,9 +75,13 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+            'driver'    => 'eloquent',
+            'model'     => App\User::class,
         ],
+        'members' => [
+            'driver'    => 'eloquent',
+            'model'     => App\Models\Member::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
