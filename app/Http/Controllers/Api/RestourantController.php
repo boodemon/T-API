@@ -10,6 +10,8 @@ use App\Lib;
 use App\Models\Category;
 use App\Models\Restourant;
 use Auth;
+use Image;
+use File;
 
 class RestourantController extends Controller
 {
@@ -20,7 +22,7 @@ class RestourantController extends Controller
     }
 
     public function index(){
-        $row = Restourant::orderBy('name')->paginate(50);
+        $row = Restourant::orderBy('restourant')->paginate(50);
         if($row){
             $res = [
                 'result'    => 'successful',
@@ -60,8 +62,7 @@ class RestourantController extends Controller
         $row->active = $request->input('active') == '1' ? 'Y' : 'N';
         if( $request->input('image')){
             $filename = time() . Lib::ext(  $request->input('image.filename') );
-            Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
-            File::delete( $this->path . $row->image );
+            Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->restourant_path . $filename);
             $row->image = $filename;
         }      
 
@@ -89,8 +90,8 @@ class RestourantController extends Controller
                 $row->active = $request->input('active') == '1' ? 'Y' : 'N';
                 if( $request->input('image')){
                     $filename = time() . Lib::ext(  $request->input('image.filename') );
-                    Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->path . $filename);
-                    File::delete( $this->path . $row->image );
+                    Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->restourant_path . $filename);
+                    File::delete( $this->restourant_path . $row->image );
                     $row->image = $filename;
                 }      
 

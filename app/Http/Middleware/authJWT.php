@@ -21,12 +21,28 @@ class authJWT
             $user = JWTAuth::toUser($request->input('token'));
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-                return response()->json(['error'=>'Token is Invalid']);
+                return response()->json(['result'=>'error','msg'=>'Token is Invalid']);
+                $result = [
+                    'code'      => 201,
+                    'result'    => 'error',
+                    'msg'       => 'Token is Invalid'
+                ];
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                return response()->json(['error'=>'Token is Expired']);
+                return response()->json(['result'=>'error','msg'=>'Token is Expired']);
+                $result = [
+                    'code'      => 202,
+                    'result'    => 'error',
+                    'msg'       => 'Something is wrong'
+                ];
             }else{
-                return response()->json(['error'=>'Something is wrong']);
+                $result = [
+                    'code'      => 203,
+                    'result'    => 'error',
+                    'msg'       => 'Something is wrong'
+                ];
             }
-        }
+
+            return response()->json($result);
+       }
         return $next($request);    }
 }
