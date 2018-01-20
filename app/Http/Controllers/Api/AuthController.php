@@ -24,6 +24,7 @@ class AuthController extends Controller
 					$user = JWTAuth::toUser($token);
 					$result = [
 						'result' 	=> 'successful' , 
+						'code'		=> 200,
 						'auth' 		=> $token,
 						'user'		=> $user
 					];
@@ -46,12 +47,14 @@ class AuthController extends Controller
 				if($user = JWTAuth::toUser($request->input('token'))){
 					$result = [
 						'result' 	=> 'successful',
+						'code'		=> 200,
 						'data'		=> $user
 					];
 				}else{
 					$result = [
 						'result' 	=> 'error',
-						'data'		=> false
+						'data'		=> false,
+						'code'		=> 204
 					];
 				}
 				return Response()->json($result);

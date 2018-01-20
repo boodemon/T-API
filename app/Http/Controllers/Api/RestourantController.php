@@ -25,11 +25,13 @@ class RestourantController extends Controller
         $row = Restourant::orderBy('restourant')->paginate(50);
         if($row){
             $res = [
+                'code'      => 200,
                 'result'    => 'successful',
                 'data'      => $row
             ];
         }else{
             $res = [
+                'code'      => 204,
                 'result'    => 'error',
                 'data'      => false,
             ];
@@ -41,12 +43,14 @@ class RestourantController extends Controller
         $row = Restourant::where('id',$id)->first();
         if( $row ){
             $res = [
+                'code'      => 200,
                 'result'    => 'successful',
                 'data'      => $row,
             ];
         }else{
             $res = [
                 'result'    => 'error',
+                'code'      => 204,
                 'data'      => false,
                 'msg'       => 'Cannot found this Restourant. Please try again.'
             ];
@@ -69,13 +73,15 @@ class RestourantController extends Controller
         if( $row->save() ){
             $res = [
                 'resule'    => 'successful',
-                'data'      => $row
+                'data'      => $row,
+                'code'      => 200
             ];
         }else{
             $res = [
                 'result'    => 'error',
                 'data'      => false,
-                'msg'       => 'Error!! Cannot save this. Please try again.'
+                'msg'       => 'Error!! Cannot save this. Please try again.',
+                'code'      => 204
             ];
         }
         return response()->json( $res );
@@ -98,20 +104,23 @@ class RestourantController extends Controller
                 if( $row->save() ){
                     $res = [
                         'resule'    => 'successful',
-                        'data'      => $row
+                        'data'      => $row,
+                        'code'      => 200
                     ];
                 }else{
                     $res = [
                         'result'    => 'error',
                         'data'      => false,
-                        'msg'       => 'Error!! Cannot save this. Please try again.'
+                        'msg'       => 'Error!! Cannot save this. Please try again.',
+                        'code'      => 204
                     ];
                 }
         }else{
             $res = [
                 'result'    => 'error',
                 'data'      => false,
-                'msg'       => 'Error!! Restourant not found. Please try again.'
+                'msg'       => 'Error!! Restourant not found. Please try again.',
+                'code'      => 204
             ];
         }
         return response()->json( $res );
@@ -124,11 +133,13 @@ class RestourantController extends Controller
             if( Restourant::whereIn('id',$ids)->delete() ){
                 $result = [
                     'result'    => 'successful',
+                    'code'      => 200
                 ];
             }else{
                 $result = [
                     'result'    => 'error',
-                    'msg'       => 'เกิดข้อผิดพลาดจากระบบไม่สามารถทำการลบข้อมูลได้ โปรดลองใหม่ภายหลัง'
+                    'msg'       => 'เกิดข้อผิดพลาดจากระบบไม่สามารถทำการลบข้อมูลได้ โปรดลองใหม่ภายหลัง',
+                    'code'      =>  204
                 ];
     
             }

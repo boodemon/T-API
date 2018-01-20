@@ -14,6 +14,7 @@ class CreateRestourantsTable extends Migration
     {
         Schema::create('restourants', function (Blueprint $table) {
             $table->increments('id');
+            $table->mediumText('category_id');
             $table->string('restourant');
             $table->string('contact');
             $table->string('tel',64);

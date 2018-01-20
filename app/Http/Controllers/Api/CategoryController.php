@@ -23,12 +23,14 @@ class CategoryController extends Controller
         if( $row ){
             $res = [
                 'result'    => 'successful',
-                'data'      => $row
+                'data'      => $row,
+                'code'      => 200
             ];
         }else{
             $res = [
                 'result'    => 'error',
-                'data'      => $row
+                'data'      => $row,
+                'code'      => 204
             ];
         }
         return response()->json( $res );
@@ -49,11 +51,13 @@ class CategoryController extends Controller
         if( $row->save() ){
             $res = [
                 'result' => 'successful',
+                'code'   => 200
             ];
         }else{
             $res = [
                 'result' => 'error',
-                'msg'    => 'Cannot Save this category. Please try again.'
+                'msg'    => 'Cannot Save this category. Please try again.',
+                'code'   => 204
             ];
         }
         return response()->json( $res );
@@ -64,13 +68,15 @@ class CategoryController extends Controller
         if( $row ){
             $res = [
                 'result'    => 'successful',
-                'data'      => $row
+                'data'      => $row,
+                'code'      => 200
             ];
         }else{ 
             $res = [
                 'result'    => 'error',
                 'data'      => false,
-                'msg'       => 'Category not found!!'
+                'msg'       => 'Category not found!!',
+                'code'      => 204
             ];
         }
         return response()->json( $res);
@@ -94,17 +100,20 @@ class CategoryController extends Controller
             if( $row->save() ){
                 $res = [
                     'result' => 'successful',
+                    'code'   => 200
                 ];
             }else{
                 $res = [
                     'result' => 'error',
-                    'msg'    => 'Cannot update this category. Please try again.'
+                    'msg'    => 'Cannot update this category. Please try again.',
+                    'code'   => 204
                 ];
             }
         }else{
                 $res = [
                     'result' => 'error',
-                    'msg'    => 'Category not found. Please try again .'
+                    'msg'    => 'Category not found. Please try again .',
+                    'code'   => 204
                 ];
         }
         return response()->json( $res );
@@ -116,11 +125,13 @@ class CategoryController extends Controller
             if( Category::whereIn('id',$ids)->delete() ){
                 $result = [
                     'result'    => 'successful',
+                    'code'      => 200
                 ];
             }else{
                 $result = [
                     'result'    => 'error',
-                    'msg'       => 'เกิดข้อผิดพลาดจากระบบไม่สามารถทำการลบข้อมูลได้ โปรดลองใหม่ภายหลัง'
+                    'msg'       => 'เกิดข้อผิดพลาดจากระบบไม่สามารถทำการลบข้อมูลได้ โปรดลองใหม่ภายหลัง',
+                    'code'      => 204
                 ];
     
             }
