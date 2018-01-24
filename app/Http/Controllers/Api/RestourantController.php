@@ -22,12 +22,28 @@ class RestourantController extends Controller
     }
 
     public function index(){
-        $row = Restourant::orderBy('restourant')->paginate(50);
+        $rows = Restourant::orderBy('restourant')->paginate(50);
+        $data = [];
+        if( $rows ){
+            foreach( $rows as $row ){
+                $data[] = [
+                    'id'            => $row->id,
+                    'groups'        => $this->groupName( @json_decode($row->category_id) ),
+                    'restourant'    => $row->restourant,
+                    'contact'       => $row->contact ,
+                    'tel'           => $row->tel,
+                    'image'         => $row->image,
+                    'active'        => $row->active,
+                    'created'       => $row->created_at,
+                    'updated'       => $row->updated_at
+                ];
+            }
+        }
         if($row){
             $res = [
                 'code'      => 200,
                 'result'    => 'successful',
-                'data'      => $row
+                'data'      => $data
             ];
         }else{
             $res = [
@@ -39,13 +55,35 @@ class RestourantController extends Controller
         return response()->json( $res );
     }
 
+    public function groupName($arr = []){
+        $data = [];
+        $group = Category::queryJson();
+        if( is_array($arr) || is_object($arr) ){
+            foreach( $arr as $dx => $ar ){
+                $data[] = $group[$ar]['name'];
+            }
+        }
+        return $data ? implode(', ',$data) : '';
+    }
+
     public function edit($id){
         $row = Restourant::where('id',$id)->first();
         if( $row ){
+            $data = [
+                'id'        => $row->id,
+                'groups'    => @json_decode( $row->category_id ),
+                'restourant'    => $row->restourant,
+                'contact'       => $row->contact ,
+                'tel'           => $row->tel,
+                'image'         => $row->image,
+                'active'        => $row->active,
+                'created'       => $row->created_at,
+                'updated'       => $row->updated_at
+            ];
             $res = [
                 'code'      => 200,
                 'result'    => 'successful',
-                'data'      => $row,
+                'data'      => $data,
             ];
         }else{
             $res = [
@@ -88,19 +126,20 @@ class RestourantController extends Controller
     }
 
     public function update(Request $request , $id ){
+        //echo '<pre>',print_r( $request->all() ),'</pre>';
         $row = Restourant::where('id',$id)->first();
         if( $row ){
-                $row->restourant = $request->input('restourant');
-                $row->contact = $request->input('contact');
-                $row->tel = $request->input('tel');
-                $row->active = $request->input('active') == '1' ? 'Y' : 'N';
+                $row->restourant    = $request->input('restourant');
+                $row->contact       = $request->input('contact');
+                $row->tel           = $request->input('tel');
+                $row->category_id   = json_encode( $request->input('groups') );
+                $row->active        = $request->input('active') == '1' ? 'Y' : 'N';
                 if( $request->input('image')){
                     $filename = time() . Lib::ext(  $request->input('image.filename') );
                     Image::make(base64_decode($request->input('image.value')))->resize(800,120)->save($this->restourant_path . $filename);
                     File::delete( $this->restourant_path . $row->image );
                     $row->image = $filename;
-                }      
-
+                }
                 if( $row->save() ){
                     $res = [
                         'resule'    => 'successful',
