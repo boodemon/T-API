@@ -53,7 +53,12 @@ return [
         'mobile' => [
             'driver' => 'jwt-auth',
             'provider' => 'members',
-        ]
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+
     ],
 
     /*
@@ -81,7 +86,11 @@ return [
         'members' => [
             'driver'    => 'eloquent',
             'model'     => App\Models\Member::class,
-        ]
+        ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -115,6 +124,12 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+		'admins' => [
+			'provider' => 'admin',
+			'email' => 'admin.auth.emails.password',
+			'table' => 'password_resets',
+			'expire' => 60,
+		],
     ],
 
 ];

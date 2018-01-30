@@ -14,9 +14,22 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function () {
+    if (Auth::guard('admin')->guest()) {
+        return redirect('login');
+    } else {
+        return redirect('dashboard');
+    }
+});
 
+Route::resource('login', 'Backend\AuthController');
 
-Route::group(['middleware'=>'cors'],function(){
+Route::group(['middleware'=>'admin'], function () {
+    Route::resource('dashboard', 'Backend\DashboardController');
+});
+
+// Start API Mobile and single page app //
+Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
     Route::post('auth/login','Api\AuthController@login');
     Route::group(['middleware' => 'jwt-auth'],function(){
 
@@ -31,3 +44,4 @@ Route::group(['middleware'=>'cors'],function(){
         Route::resource('restourant','Api\RestourantController');
     });
 });
+
