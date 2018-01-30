@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\adminRequest;
@@ -9,7 +9,6 @@ use App\Http\Requests;
 use Request as Req;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Models\Logs;
 use App\Models\OrderHead;
 use App\Models\OrderList;
 use App\Models\Category;
@@ -52,7 +51,6 @@ class AdminController extends Controller
 			'actionUrl' => 'user/0',
 				];
 
-		Logs::activity(Auth::guard('admin')->user()->name . ' open user page');
 		return view('lostrip.users.admin',$data);
     }
 
@@ -71,7 +69,6 @@ class AdminController extends Controller
 				'subject'	=> 'Add new user',
 				'title'		=> 'Form user'
 			];
-		Logs::activity(Auth::guard('admin')->user()->name . ' open create user page');
 		return view('lostrip.users.form',$data);
     }
 
@@ -109,7 +106,6 @@ class AdminController extends Controller
 			}
 
 			$user->save();
-			Logs::activity(Auth::guard('admin')->user()->name . ' insert new user is ' . $user->name );
 
 			return redirect('user');
     }
@@ -152,7 +148,6 @@ class AdminController extends Controller
 			'subject'	=> 'Profile ' . $user->name,
 			'title'		=> 'Form user'
 			];
-		Logs::activity(Auth::guard('admin')->user()->name . ' open page edit user  ' . $user->name );
 		return view('lostrip.users.form',$data);
 
 	}
@@ -237,7 +232,6 @@ class AdminController extends Controller
 			'title'		=> 'Form profile',
 			'actionUrl' => 'user/'.$id,
 		];
-		Logs::activity(Auth::guard('admin')->user()->name . ' open page profile  ' );
 		return view('lostrip.users.profile',$data);
 	}
 
@@ -288,9 +282,6 @@ class AdminController extends Controller
 				}
 
 			$user->save();
-			//echo '<pre>',print_r($request->all()), print_r($user), '</pre>';
-			Logs::activity( Auth::guard('admin')->user()->name . ( $activity ? implode(', ', $activity) : '' ) );
-			
 			return redirect('user');
 		}
     }
@@ -308,12 +299,10 @@ class AdminController extends Controller
     }
 	public function del($id = 0){
 		$user = User::where('id',$id)->first();
-		Logs::activity(Auth::guard('admin')->user()->name . ' Delete user ' . $user->name );
 		$user->delete();
 	}
 
 	public function logout(){
-		Logs::activity( Auth::guard('admin')->user()->name . ' Logout system' );
 		Auth::guard('admin')->logout();
 		return redirect('login');
 	}

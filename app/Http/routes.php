@@ -26,6 +26,7 @@ Route::resource('login', 'Backend\AuthController');
 
 Route::group(['middleware'=>'admin'], function () {
     Route::resource('dashboard', 'Backend\DashboardController');
+    Route::get('logout','Backend\AdminController@logout');
 });
 
 // Start API Mobile and single page app //

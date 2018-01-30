@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public function index(){
-        return 'Dashboard';
+        return view('backend.dashboard.index');
     }
     //
 }
