@@ -19,7 +19,9 @@ class CategoryController extends Controller
     }
 
     public function index(){
-        $row = Category::orderBy('category_sort')->orderBy('name')->paginate(25);
+        $row = Category::orderBy('category_sort')
+                        ->orderBy('name')
+                        ->paginate(25);
         if( $row ){
             $res = [
                 'result'    => 'successful',

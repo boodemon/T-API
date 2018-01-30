@@ -38,18 +38,10 @@ class RestourantController extends Controller
                     'updated'       => $row->updated_at
                 ];
             }
-        }
-        if($row){
             $res = [
                 'code'      => 200,
                 'result'    => 'successful',
                 'data'      => $data
-            ];
-        }else{
-            $res = [
-                'code'      => 204,
-                'result'    => 'error',
-                'data'      => false,
             ];
         }
         return response()->json( $res );
