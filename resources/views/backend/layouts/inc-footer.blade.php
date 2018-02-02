@@ -5,14 +5,17 @@
 </footer>
 
 <!-- Bootstrap and necessary plugins -->
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="node_modules/pace-progress/pace.min.js"></script>
+<script type="text/javascript">
+  var _base = '{{ url("") }}';
+</script>
+<script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('node_modules/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('node_modules/pace-progress/pace.min.js') }}"></script>
 
 <!-- Plugins and scripts required by all views -->
-<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="{{ asset('node_modules/chart.js/dist/Chart.min.js') }}"></script>
 
 <!-- CoreUI main scripts -->
 
-<script src="js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>

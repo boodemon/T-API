@@ -27,6 +27,7 @@
     </main>
   </div>
 @include('backend.layouts.inc-footer')
+@yield('modal');
 @yield('javascript')
 </body>
 </html>
