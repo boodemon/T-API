@@ -36,9 +36,12 @@ class CategoryController extends Controller
         $row->active = $request->has('active') ? 'Y':'N';
         if( $request->hasFile('image')){
             $file = $request->file('image');
-				$filename = time() . Lib::encodelink( $file->getClientOriginalName() );
-                Image::make( $file )->resize(800,400)->save($this->path . $filename);
-                echo 'upload file';
+				$filename = time() . '.jpg';// Lib::encodelink( $file->getClientOriginalName() );
+                Image::make( $file )
+                        ->encode('jpg', 75)
+                        ->resize(800,400)
+                        ->save($this->path . $filename);
+                //echo 'upload file';
                 $row->image = $filename;
 		}
         if( $row->save() ){
@@ -77,19 +80,22 @@ class CategoryController extends Controller
 
     public function update( Request $request ,$id ){
        
-        echo '<pre>', print_r( $request->all() ) ,'</pre>';
+        //echo '<pre>', print_r( $request->all() ) ,'</pre>';
         $row = Category::where('id',$id)->first();
         if( $row ){
             $row->name = $request->input('name');
             $row->category_sort = $request->input('category_sort');
             $row->active = $request->has('active') ? 'Y' : 'N';
             if( $request->hasFile('image') ){
+                $filename = time() . '.jpg';// Lib::encodelink( $file->getClientOriginalName() );
                 $file = $request->file('image');
-                    $filename = time() .'.' . $file->getclientoriginalextension();
-                    echo 'upload file';
-                    Image::make( $file )->resize(800,400)->save($this->path . $filename);
+                //echo '<pre>', print_r( $file ), print_r( $request->file('image') ) ,'</pre>';
+                     Image::make( $file->getRealPath() )
+                        ->encode('jpg', 75)
+                        ->resize(800,400)
+                        ->save($this->path . $filename);
                     
-                    @File::delete( $this->path . $row->image );
+                    //@File::delete( $this->path . $row->image );
                     $row->image = $filename;
             }
             if( $row->save() ){
@@ -111,7 +117,7 @@ class CategoryController extends Controller
                     'code'   => 204
                 ];
         }
-        echo response()->json( $res );
+       //echo response()->json( $res );
        return redirect()->back(); 
     }
     public function destroy($id)

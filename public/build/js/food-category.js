@@ -1,5 +1,9 @@
 (function($)
 {
+    var img = image;
+        img.inputid = $('#image');
+        img.previewid = $('#file-preview');
+        img.inputclick();
     function frmcate(){
         this.clearInput = function(){
             $('#frm-category').attr('action', _base + '/foods/category');
@@ -39,6 +43,20 @@
             });
         }
 
+        this.delete = function(id){
+            $.ajax({
+                url : _base + '/foods/category/' + id,
+                method:'POST',
+                data:{_token:$('input[name="_token"]').val(), _method:'DELETE'},
+                success : function(data){
+                    
+                },
+                error:function(e){
+                    console.log(e);
+                }
+            });
+        }
+
 
     }
 
@@ -53,5 +71,29 @@
     $('.onEdit').on('click',function(){
         frm.edit($(this).attr('data-id') );
         $('#modal-category').modal('show');
+    });
+
+    $('.onDelete').on('click',function(e){
+        e.preventDefault();
+        var row = $(this).closest('tr');
+        if( confirm('Please confirm delete this')){
+            var id = $(this).attr('data-id');
+            frm.delete(id);
+            row.remove();
+        }
+    });
+
+    $('.btn-delete').on('click',function(e){
+        var ids = [];
+        if (!confirm('Please confirm delete this selected')) 
+            return false;
+        $('.checkboxAll').each(function(index,val){
+            var row = $(this).closest('tr');
+            if( $(this).is(':checked') ){
+                ids.push( $(this).val() );
+                row.remove();
+            }
+        });
+        frm.delete(ids.join('-'));
     });
 }(jQuery));

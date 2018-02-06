@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title pull-left">Category Order</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <button type="button" class="close pull-right" aria-label="Close"  data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -11,9 +11,9 @@
           <!-- Form category input -->
           <form enctype="multipart/form-data" class="form-horizontal" id="frm-category" method="POST" action="">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-            <div class="form-group row image-preview">
+            <div class="form-group row">
               <label class="col-md-2 form-control-label"></label>
-              <div class="col-md-10">
+              <div class="col-md-10" id="file-preview">
                 <img src="" class="img-preview">
               </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="form-group row">
               <label class="col-md-2 form-control-label">Image : </label>
               <div class="col-md-10">
-                <input type="file" id="image" name="image" />
+                <input type="file" id="image" name="image" file-allow="jpg|jpeg|png|gif" />
                 <input type="hidden" name="id" id="id" />
                 <input type="hidden" name="_method" />
               </div>
@@ -54,7 +54,7 @@
               <button type="submit" class="btn btn-primary">
                 <i class="fa fa-save"></i> SAVE</button>
               <button type="button" class="btn btn-danger"  data-dismiss="modal">
-                <i class="fa fa-times"></i> cancel</button>
+                <i class="fa fa-times"></i> CANCEL</button>
             </div>
           </form>
           <!-- /Form category input -->

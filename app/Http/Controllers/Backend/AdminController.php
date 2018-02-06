@@ -51,7 +51,7 @@ class AdminController extends Controller
 			'actionUrl' => 'user/0',
 				];
 
-		return view('lostrip.users.admin',$data);
+		return view('backend.user.index',$data);
     }
 
     /**

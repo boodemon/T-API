@@ -26,8 +26,16 @@ Route::resource('login', 'Backend\AuthController');
 
 Route::group(['middleware'=>'admin'], function () {
     Route::resource('dashboard', 'Backend\DashboardController');
-    Route::get('logout','Backend\AdminController@logout');
+    Route::resource('user','Backend\AdminController');
     Route::resource('foods/category','Backend\CategoryController');
+    Route::resource('foods/restourant', 'Backend\RestourantController');
+    Route::resource('foods/food','Backend\FoodController');
+    Route::get('foods/price/{id?}/{food_id?}', 'Backend\FoodController@price');
+    Route::get('foods/price-list/{food_id?}', 'Backend\FoodController@price_list');
+
+    Route::resource('payment','Backend\PaymentController');
+    Route::resource('member','Backend\MemberController');
+    Route::get('logout','Backend\AdminController@logout');
 });
 
 // Start API Mobile and single page app //

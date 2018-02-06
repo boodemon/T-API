@@ -13,6 +13,7 @@
   <link href="{{ asset('node_modules/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
 
   <!-- Main styles for this application -->
+  <link href="{{ asset('css/core.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('css/layouts.css') }}" rel="stylesheet">
   <!-- Styles required by this views -->
