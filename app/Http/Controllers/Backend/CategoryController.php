@@ -23,7 +23,8 @@ class CategoryController extends Controller
                         ->paginate(25);
         $data = [
             'rows' => $rows,
-            'img_path' => $this->path
+            'img_path' => $this->path,
+            '_breadcrumb'	=> 'Category'
         ];
         return view('backend.category.index',$data);
     }

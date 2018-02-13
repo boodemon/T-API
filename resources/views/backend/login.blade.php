@@ -5,9 +5,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
-  <meta name="author" content="Lukasz Holeczek">
-  <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keyword" content="">
+  <meta name="robots" CONTENT="noindex, nofollow">
+  <link rel="shortcut icon" href="{{ asset('public/img/favicon.png') }}">
   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
   <title>Administrator by set confrents</title>
@@ -17,7 +19,7 @@
   <link href="{{ asset('node_modules/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
 
   <!-- Main styles for this application -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
 
   <!-- Styles required by this views -->
 
@@ -71,6 +73,7 @@
           <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
             <div class="card-body text-center">
               <div>
+                <div class="text-center"><img src="{{ asset('public/img/f-logo.png') }}" style="width:120px; margin-top:-20px;" /></div>
                 <h2>ADMINISTRATORS <br> SET CONFRENTS</h2>
                 <p>Aministrator management by order products and Customer</p>
                 

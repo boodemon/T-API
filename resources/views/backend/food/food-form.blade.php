@@ -15,7 +15,7 @@
                     <label class="col-md-2 form-control-label"></label>
                     <div class="col-md-10" id="file-preview">
                         @if( $row && $row->food_image )
-                            <img src="{{ asset('images/foods/'. $row->food_image) }}" class="img-preview"/>
+                            <img src="{{ asset('public/images/foods/'. $row->food_image) }}" class="img-preview"/>
                         @endif
                     </div>
                 </div>
@@ -70,6 +70,6 @@
 </div>
 @endsection
 @section('javascript')
-    <script src="{{ asset('js/tools/image.js') }}"></script>
-    <script src="{{ asset('build/js/food-form.js') }}"></script>
+    <script src="{{ asset('public/js/tools/image.js') }}"></script>
+    <script src="{{ asset('public/build/js/food-form.js') }}"></script>
 @endsection

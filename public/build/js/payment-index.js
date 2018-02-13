@@ -6,7 +6,7 @@
     function frmrestourant() {
 
         this.clearInput = function () {
-            $('#frm-category').attr('action', _base + '/foods/restourant');
+            $('#frm-category').attr('action', _base + '/payment');
             $('input[type="text"]').val('');
             $('input[name="id"]').val(0);
             $('input[type="file"]').val('');
@@ -15,37 +15,21 @@
             $('input[name="_method"]').val('POST');
         }
         this.edit = function (id) {
-            $('#frm-category').attr('action', _base + '/foods/restourant/' + id);
+            $('#frm-category').attr('action', _base + '/payment/' + id);
             $.ajax({
-                url: _base + '/foods/restourant/' + id + '/edit',
+                url: _base + '/payment/' + id + '/edit',
                 success: function (data) {
                     console.log('data', data);
                     if (data.code == 200) {
                         var res = data.data;
                         $('input[name="id"]').val(res.id);
-                        $('input[name="restourant"]').val(res.restourant);
-                        $('textarea[name="contact"]').val(res.contact);
-                        $('input[name="tel"]').val(res.tel);
+                        $('input[name="bank_name"]').val(res.bank_name);
+                        $('input[name="bank_branch"]').val(res.bank_branch);
+                        $('input[name="bank_type"]').val(res.bank_type);
+                        $('input[name="bank_id"]').val(res.bank_id);
+                        $('input[name="bank_account"]').val(res.bank_account);
+                        $('input[name="bank_sort"]').val(res.bank_sort);
                         $('input[name="_method"]').val('PUT');
-
-                        if (res.groups){
-                            var $gr = res.groups;
-                            $('input[name="groups[]"').each(function(i,v){
-                                var val = $(this).val().toString();
-                                if ($gr.indexOf(parseInt(val)) !== -1){
-                                    console.log(val + ' checked true');
-                                    $(this).prop('checked',true);
-                                }else{
-                                    console.log(val + ' checked false');
-                                    $(this).prop('checked',false);
-                                }
-                                console.log($gr.indexOf( parseInt(val) ), ' | ', $gr ,' | ', val.toString() );
-                            });
-
-                        }else{
-                            console.log('group checked false all');
-                            $('input[name="groups[]"').prop('checked',false);
-                        }
 
                         if (res.active == 'Y') {
                             $('input[name="active"]').prop('checked', true);
@@ -53,7 +37,7 @@
                             $('input[name="active"]').prop('checked', false);
                         }
                         if (res.image) {
-                            $('#file-preview').html('<img src="' + _base + '/public/images/restourant/' + res.image +'" />');
+                            $('#file-preview').html('<img src="' + _base + '/public/images/bank/' + res.bank_image + '" />');
                         } else {
                             $('#file-preview').html('');
                         }
@@ -65,7 +49,7 @@
 
         this.delete = function (id) {
             $.ajax({
-                url: _base + '/foods/restourant/' + id,
+                url: _base + '/payment/' + id,
                 method: 'POST',
                 data: { _token: $('input[name="_token"]').val(), _method: 'DELETE' },
                 success: function (data) {
@@ -85,12 +69,12 @@
     $('#btn-new').on('click', function () {
         //alert('model');
         frm.clearInput();
-        $('#modal-restourant').modal('show');
+        $('#modal-payment').modal('show');
     });
 
     $('.onEdit').on('click', function () {
         frm.edit($(this).attr('data-id'));
-        $('#modal-restourant').modal('show');
+        $('#modal-payment').modal('show');
     });
 
     $('.onDelete').on('click', function (e) {

@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
           $table->string('name');
           $table->string('tel',20);
           $table->string('level',20);
-          $table->enum('active',['N','Y']);
+          $table->enum('active',['N','Y','D']);
           $table->rememberToken();
           $table->timestamps();
         });

@@ -12,9 +12,12 @@
     <main class="main">
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+        @if( $_breadcrumb != 'Dashboard' )
+        <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">{{ $_breadcrumb ? $_breadcrumb : '' }}</li>
+        @else
         <li class="breadcrumb-item active">Dashboard</li>
+        @endif
       </ol>
 
       <div class="container-fluid">

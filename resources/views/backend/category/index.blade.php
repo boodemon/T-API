@@ -28,7 +28,7 @@
               <td class="text-center">
                 <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
               </td>
-              <td><img src="{{asset('images/category/' . $row->image) }}" class="img-responsive" width="120" /></td>
+              <td><img src="{{asset('public/images/category/' . $row->image) }}" class="img-responsive" width="120" /></td>
               <td>{{ $row->name }}</td>
               <td>{{ $row->category_sort }}</td>
               <td class="text-center">
@@ -52,6 +52,6 @@
     @include('backend.category.category-form')
 @endsection
 @section('javascript')
-<script src="{{ asset('js/tools/image.js') }}"></script>
-<script src="{{ asset('build/js/food-category.js') }}"></script>
+<script src="{{ asset('public/js/tools/image.js') }}"></script>
+<script src="{{ asset('public/build/js/food-category.js') }}"></script>
 @endsection

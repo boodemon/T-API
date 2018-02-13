@@ -21,14 +21,15 @@ class FoodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-        $this->food_path = 'images/foods/';
+        $this->food_path = public_path() .'/images/foods/';
     }
     public function index()
     {
         $rows = Food::orderBy('food_name')->paginate(24);
         $data = [
             'rows'  => $rows,
-            'group' => Category::queryJson() 
+            'group' => Category::queryJson() ,
+            '_breadcrumb'	=> 'Food'
         ];
         return view('backend.food.index',$data);
     }
@@ -45,6 +46,7 @@ class FoodController extends Controller
             'action'        => 'foods/food',
             '_method'       => 'POST',
             'row'           => false,
+            '_breadcrumb'	=> 'Food',
             'selected'      => 0
         ];
         return view('backend.food.food-form',$data);
@@ -113,6 +115,7 @@ class FoodController extends Controller
             'action'    => 'foods/food/'. $id,
             '_method'   => 'PUT',
             'row'       => $row,
+            '_breadcrumb'	=> 'Food',
             'selected'    => $row->category_id
         ];
         return view('backend.food.food-form',$data);    

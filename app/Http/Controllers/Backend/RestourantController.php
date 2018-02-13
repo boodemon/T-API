@@ -14,8 +14,8 @@ use File;
 class RestourantController extends Controller
 {
     public function __construct(){
-        $this->category_path = 'images/category/';
-        $this->restourant_path = 'images/restourant/';
+        $this->category_path = public_path() .'/images/category/';
+        $this->restourant_path = public_path() .'/images/restourant/';
         //echo '<pre>Auth user : ',print_r( Auth::guard('web')->user() ). '</pre>';
     }
 
@@ -26,7 +26,8 @@ class RestourantController extends Controller
                 'code'      => 200,
                 'result'    => 'successful',
                 'rows'      => $rows,
-                'groups'     => Category::queryJson()
+                'groups'     => Category::queryJson(),
+                '_breadcrumb'	=> 'Restourant'
             ];
         
         return view('backend.restourant.index',$data);

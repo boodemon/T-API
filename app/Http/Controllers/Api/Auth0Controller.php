@@ -8,53 +8,49 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use App\Models\Member;
 use Request as Req;
 
 class Auth0Controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->login($request);
     }
 
     public function login($request){
-        $user = $request->input('username');
-        $password = $request->input('password');
-        $email 	= ['email' => $user, 'password' => $password];
-        $username 	= ['username' => $user, 'password' => $password];
-        if( Auth::guard('web')->attempt($email) || Auth::guard('web')->attempt($username) ){
-            User::where('id',Auth::guard('web')->user()->id)->update(['remember_token' => $request->input('token')]);
-            Auth::guard('web')->user()->token = $request->input('token');
-            return Response()->json( Auth::guard('web')->user() );
-        }else{
-            return Response()->json( ['response' => 'error','message' => 'Username or Password fails Please try again']);
-        }
+	public function login(Request $request){				
+			$user = $request->input('username');
+			$password = $request->input('password');
+			$email 	= ['email' => $user, 'password' => $password];
+			$username 	= ['username' => $user, 'password' => $password];
+			$result = [];
+			if($token = JWTAuth::attempt($username) ){
+				Member::where('username',$user)->update(['remember_token' => $token ]);
+				$data = JWTAuth::toUser($token);
+				$result = [
+					'result' 	=> 'successful' , 
+					'code'		=> 200,
+					'auth' 		=> $token,
+					'data'		=> $data
+				];
+			}else{
+				$result = [
+					'result' => 'error',
+					'message' => 'Username or Password fails Please try again'
+					];
+			}
+			return Response()->json($result);
+	}
     }
     /**
      * Display the specified resource.

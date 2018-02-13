@@ -2,7 +2,7 @@
 @section('content')
 <div class="card">
       <div class="card-header">
-        <i class="fa fa-user"></i> Administrators data
+        <i class="fa fa-user"></i> Member data
         <div class="pull-right">
             <button type="button" id="btn-new" data-id="0" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
             <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i> Delete</button>
@@ -27,9 +27,7 @@
                 @foreach( $rows as $row )
                 <tr>
                     <td class="text-center">
-                        @if($row->id != 1)
                         <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
-                        @endif
                     </td>
                     <td>{{ $row->username }}</td>
                     <td>{{ $row->email }}</td>
@@ -40,9 +38,7 @@
                     </td>
                     <td class="action">
                         <a title="Edit" class="text-primary onEdit href="#" data-id="{{ $row->id }}" ><i class="icon-note"></i></a>
-                         @if($row->id != 1)
                         <a title="Delete" class="text-danger onDelete" data-id="{{ $row->id }}" ><i class="icon-trash"></i></a>
-                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -53,8 +49,8 @@
 </div>
 @endsection
 @section('modal')
-    @include('backend.user.modal-form')
+    @include('backend.member.modal-form')
 @endsection
 @section('javascript')
-    <script src="{{ asset('public/build/js/user-index.js') }}"></script>
+    <script src="{{ asset('public/build/js/member-index.js') }}"></script>
 @endsection

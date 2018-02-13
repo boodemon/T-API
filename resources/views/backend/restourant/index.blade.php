@@ -29,7 +29,7 @@
                 <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
               </td>
               <td>
-                <img src="{{asset('images/restourant/' . $row->image) }}" class="img-responsive" width="120" />
+                <img src="{{asset('public/images/restourant/' . $row->image) }}" class="img-responsive" width="120" />
               </td>
               <td>
                   <p><strong>{{ $row->restourant }}</strong></p>
@@ -60,6 +60,6 @@
     @include('backend.restourant.restourant-form')
 @endsection
 @section('javascript')
-<script src="{{ asset('js/tools/image.js') }}"></script>
-<script src="{{ asset('build/js/food-restourant.js') }}"></script>
+<script src="{{ asset('public/js/tools/image.js') }}"></script>
+<script src="{{ asset('public/build/js/food-restourant.js') }}"></script>
 @endsection

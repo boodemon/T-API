@@ -49,6 +49,7 @@ class AdminController extends Controller
 			'subject'=> 'Manage user account',
 			'title'	=>	'User List',
 			'actionUrl' => 'user/0',
+			'_breadcrumb'	=> 'Administrator'
 				];
 
 		return view('backend.user.index',$data);

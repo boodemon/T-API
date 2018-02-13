@@ -164,6 +164,10 @@ a.padding-10{padding:10px;}
 	border:1px solid #f00;
 	color:#f00;
 }
+.text-require{
+	color:#f00;
+	content: '* ';
+}
 
 
 /*--:: BORDER - COLOR - BOX ::--*/

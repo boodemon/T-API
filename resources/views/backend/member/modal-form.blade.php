@@ -1,8 +1,8 @@
-<div class="modal fade "  tabindex="-1" id="modal-user" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade "  tabindex="-1" id="modal-member" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title pull-left">Aministrators user</h4>
+          <h4 class="modal-title pull-left">Member user</h4>
           <button type="button" class="close pull-right" aria-label="Close"  data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -30,7 +30,7 @@
                         <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
                     </td>
                     <td>
-                        <img src="{{asset('images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
+                        <img src="{{asset('public/images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
                     </td>
                     <td>{{ $row->food_name }}</td>
                     <td>{{ $group[$row->category_id]['name']}}</td>
@@ -54,5 +54,5 @@
     @include('backend.food.modal-price')
 @endsection
 @section('javascript')
-    <script src="{{ asset('build/js/food-index.js') }}"></script>
+    <script src="{{ asset('public/build/js/food-index.js') }}"></script>
 @endsection

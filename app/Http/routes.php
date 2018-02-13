@@ -26,7 +26,7 @@ Route::resource('login', 'Backend\AuthController');
 
 Route::group(['middleware'=>'admin'], function () {
     Route::resource('dashboard', 'Backend\DashboardController');
-    Route::resource('user','Backend\AdminController');
+    Route::resource('order', 'Backend\OrderController');
     Route::resource('foods/category','Backend\CategoryController');
     Route::resource('foods/restourant', 'Backend\RestourantController');
     Route::resource('foods/food','Backend\FoodController');
@@ -35,6 +35,12 @@ Route::group(['middleware'=>'admin'], function () {
 
     Route::resource('payment','Backend\PaymentController');
     Route::resource('member','Backend\MemberController');
+    Route::post('member/checker', 'Backend\MemberController@checker');
+    Route::resource('report','Backend\ReportController');
+    Route::resource('user','Backend\UserController');
+    Route::get('user/profile', 'Backend\UserController@getProfile');
+    Route::post('user/profile', 'Backend\UserController@postProfile');
+    Route::post('user/checker', 'Backend\UserController@checker');
     Route::get('logout','Backend\AdminController@logout');
 });
 

@@ -638,7 +638,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/1.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-success"></span>
                           </div>
                         </td>
@@ -649,7 +649,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/USA.png" alt="USA" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/USA.png' ) }}" alt="USA" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -675,7 +675,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/2.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-danger"></span>
                           </div>
                         </td>
@@ -687,7 +687,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/Brazil.png" alt="Brazil" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/Brazil.png' ) }}" alt="Brazil" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -713,7 +713,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/3.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/3.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-warning"></span>
                           </div>
                         </td>
@@ -724,7 +724,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/India.png" alt="India" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/India.png' ) }}" alt="India" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -750,7 +750,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/4.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-secondary"></span>
                           </div>
                         </td>
@@ -761,7 +761,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/France.png" alt="France" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/France.png' ) }}" alt="France" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -787,7 +787,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/5.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/5.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-success"></span>
                           </div>
                         </td>
@@ -798,7 +798,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/Spain.png" alt="Spain" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/Spain.png' ) }}" alt="Spain" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -824,7 +824,7 @@
                       <tr>
                         <td class="text-center">
                           <div class="avatar">
-                            <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            <img src="{{ asset('public/img/avatars/6.jpg' ) }}" class="img-avatar" alt="admin@bootstrapmaster.com">
                             <span class="avatar-status badge-danger"></span>
                           </div>
                         </td>
@@ -835,7 +835,7 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <img src="img/flags/Poland.png" alt="Poland" style="height:24px;">
+                          <img src="{{ asset('public/img/flags/Poland.png' ) }}" alt="Poland" style="height:24px;">
                         </td>
                         <td>
                           <div class="clearfix">
@@ -869,5 +869,5 @@
         </div>
         @endsection
         @section('javascript')
-        <script src="js/views/main.js"></script>
+        <script src="{{ asset('public/js/views/main.js') }}"></script>
         @endsection

@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 
-class OrderController extends Controller
+class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +18,9 @@ class OrderController extends Controller
     {
         $data = [
             'rows' => false,
-            '_breadcrumb'	=> 'Order'
+            '_breadcrumb'	=> 'Order Report'
         ];
-        return view('backend.order.index',$data);
+        return view('backend.report.index',$data);
     }
 
     /**

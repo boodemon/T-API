@@ -33,7 +33,7 @@
                         }
                         if( res.image ){
                             $('.image-preview').show();
-                            $('.img-preview').attr('src',_base + '/images/category/' + res.image);
+                            $('.img-preview').attr('src',_base + '/public/images/category/' + res.image);
                         }else{
                             $('.image-preview').hide();
                         }
