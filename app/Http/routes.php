@@ -46,17 +46,29 @@ Route::group(['middleware'=>'admin'], function () {
 
 // Start API Mobile and single page app //
 Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
-    Route::post('auth/login','Api\AuthController@login');
+    // Member mobile app //
+    Route::post('auth0/register','Api\Auth0Controller@register');
+    Route::post('auth0/checkuser','Api\Auth0Controller@checkuser');
+    Route::post('auth0/login','Api\Auth0Controller@login');
+    //
+    Route::group(['middleware' => 'jwt-member'],function(){
+        Route::resource('category','Api\CategoryController');
+        Route::get('foods/{id?}','Api\FoodController@index');
+        Route::resource('food','Api\FoodController');
+        Route::get('user','Api\MemberController@check');
+    });
+
+    Route::get('/', function () {
+        $rows = App\Models\Member::orderBy('name')->get();
+        return response()->json( $rows );
+    });    
     Route::group(['middleware' => 'jwt-auth'],function(){
 
-        Route::get('/', function () {
-            return view('welcome');
-        });        
+       
         Route::post('auth/signin','Api\AuthController@signin');
         Route::get('auth/check','Api\AuthController@check');
-        Route::resource('auth0','Api\Auth0Controller');
         Route::resource('admin','Api\AdminController');
-        Route::resource('category','Api\CategoryController');
+        
         Route::resource('restourant','Api\RestourantController');
     });
 });

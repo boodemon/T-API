@@ -51,6 +51,7 @@
             @endif
           </tbody>
         </table>
+        {!! $rows->links() !!}
       </div>
     </div>
 @endsection

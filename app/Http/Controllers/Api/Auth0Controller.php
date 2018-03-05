@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\memberRequest;
 use Auth;
-use App\User;
+use JWTAuth;
 use App\Models\Member;
 use Request as Req;
 
@@ -22,12 +23,27 @@ class Auth0Controller extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function register(memberRequest $request)
     {
-        $this->login($request);
+        $row = new Member;
+        $row->name      = $request->input('name');
+        $row->username  = $request->input('username');
+        $row->email     = $request->input('email');
+        $row->password  = bcrypt($request->input('password'));
+        $row->tel       = $request->input('tel');
+        if( $row->save() ){
+            $data = [
+                'code'      => 200,
+                'result'    => 'successful',
+            ];
+        }else{
+            $data = [
+                'code'      => 202,
+                'result'    => 'error'
+            ];
+        }
     }
 
-    public function login($request){
 	public function login(Request $request){				
 			$user = $request->input('username');
 			$password = $request->input('password');
@@ -50,50 +66,16 @@ class Auth0Controller extends Controller
 					];
 			}
 			return Response()->json($result);
-	}
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function checkuser(Request $request){
+        if( $request->input('type') == 'username'){
+            $row = User::where('username',$request->input('text'))->count();
+        }elseif( $request->input('type') == 'email') {
+            $row = User::where('email',$request->input('text'))->count();
+        }else{
+            $row = 0;
+        }
+        return $row ;
     }
 }

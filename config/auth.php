@@ -51,8 +51,8 @@ return [
             'provider' => 'users',
         ],
         'mobile' => [
-            'driver' => 'jwt-auth',
-            'provider' => 'members',
+            'driver'    => 'jwt',
+            'provider'  => 'members',
         ],
         'admin' => [
             'driver' => 'session',

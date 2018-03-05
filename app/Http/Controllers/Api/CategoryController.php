@@ -26,6 +26,7 @@ class CategoryController extends Controller
             $res = [
                 'result'    => 'successful',
                 'data'      => $row,
+                'img_path'  => asset('public/images/category/') .'/',//$this->path,
                 'code'      => 200
             ];
         }else{
