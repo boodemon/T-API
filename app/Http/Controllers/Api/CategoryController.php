@@ -19,13 +19,28 @@ class CategoryController extends Controller
     }
 
     public function index(){
-        $row = Category::orderBy('category_sort')
+        $rows = Category::orderBy('category_sort')
                         ->orderBy('name')
                         ->paginate(25);
-        if( $row ){
+        if( $rows ){
+            $jsdata = [];
+            if( $rows ){
+                foreach( $rows as $row ){
+                    $jsdata[] = [
+                        'id'    => $row->id,
+                        'name' => $row->name,
+                        'image' => Lib::exsImg( 'public/images/category/', $row->image  ),
+                        'type' => $row->type,
+                        'active' => $row->active,
+                        'category_sort' => $row->category_sort,
+                        'created_at'    => date('Y-m-d H:i:s', strtotime($row->created_at) ),
+                        'updated_at'    => date('Y-m-d H:i:s', strtotime($row->updated_at) ),
+                    ];
+                }
+            }
             $res = [
                 'result'    => 'successful',
-                'data'      => $row,
+                'data'      => $jsdata,
                 'img_path'  => asset('public/images/category/') .'/',//$this->path,
                 'code'      => 200
             ];

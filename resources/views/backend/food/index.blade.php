@@ -33,7 +33,7 @@
                         <img src="{{asset('public/images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
                     </td>
                     <td>{{ $row->food_name }}</td>
-                    <td>{{ $group[$row->category_id]['name']}}</td>
+                    <td>{{ @$group[$row->category_id]['name']}}</td>
                     <td class="text-center"><a href="#" class="show-price" food-id="{{ $row->id }}" title="Click show price list of food">{{ App\Models\Price::unit( $row->id ) }} ร้าน</a></td>
                     <td class="text-center">
                         {!! Lib::active( $row->active ) !!}
@@ -47,6 +47,9 @@
               @endif
           </tbody>
         </table>
+    </div>
+    <div class="text-center">
+        {!! $rows->links() !!}
     </div>
 </div>
 @endsection

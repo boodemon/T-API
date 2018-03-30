@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use File;
 class Lib 
 {
     public static function ext($file = ''){
@@ -63,5 +64,17 @@ class Lib
 		$link = str_replace('(', '', $link);
 		$link = str_replace(')', '', $link);
 		return substr($link,0,20) .'.';
-    }
+	}
+	
+	public static function exsImg( $path,$img ){
+		$file = $path .'/'. $img;
+		if( !empty($img) && file_exists( $file ) ){
+			$image = asset($file);
+			
+		}else{
+			$image = asset('public/images/no-image.svg');
+		}
+		
+		return $image;
+	}
 }

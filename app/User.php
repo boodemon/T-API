@@ -23,4 +23,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function toUser($token = ''){
+        $base64 = @base64_decode( $token );
+        $data = @json_decode( $base64 );
+        //echo 'token = '. $token .' | base64 = '. $base64 .'<pre>', print_r( $data ) .'</pre>';
+        if( $data  ){
+            $user = User::where('username', $data->username)
+                        ->where('id',$data->id)
+                        ->first();
+            if( !$user )
+                return false;
+            
+            return $user;
+        }else{ 
+            return false;
+        }
+    }
+
+    public function attempt( $user ){
+
+    }
 }

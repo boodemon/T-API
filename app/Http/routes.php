@@ -48,20 +48,26 @@ Route::group(['middleware'=>'admin'], function () {
 Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
     // Member mobile app //
     Route::post('auth0/register','Api\Auth0Controller@register');
+    Route::post('auth0/google','Api\Auth0Controller@google_app');
+    Route::post('auth0/facebook','Api\Auth0Controller@facebook_app');
     Route::post('auth0/checkuser','Api\Auth0Controller@checkuser');
     Route::post('auth0/login','Api\Auth0Controller@login');
     //
     Route::group(['middleware' => 'jwt-member'],function(){
+        Route::resource('order','Api\OrderController');
+        Route::resource('bank','Api\BankController');
         Route::resource('category','Api\CategoryController');
         Route::get('foods/{id?}','Api\FoodController@index');
         Route::resource('food','Api\FoodController');
+        Route::get('food-price/{food_id?}','Api\FoodController@pricelist');
         Route::get('user','Api\MemberController@check');
     });
 
     Route::get('/', function () {
         $rows = App\Models\Member::orderBy('name')->get();
         return response()->json( $rows );
-    });    
+    });
+    
     Route::group(['middleware' => 'jwt-auth'],function(){
 
        
@@ -72,4 +78,5 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
         Route::resource('restourant','Api\RestourantController');
     });
 });
+
 

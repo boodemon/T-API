@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'mobile',
         'passwords' => 'users',
     ],
 
@@ -51,12 +51,12 @@ return [
             'provider' => 'users',
         ],
         'mobile' => [
-            'driver'    => 'jwt',
-            'provider'  => 'members',
+            'driver'    => 'session',
+            'provider'  => 'users',
         ],
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admin',
+            'provider' => 'members',
         ],
 
     ],

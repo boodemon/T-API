@@ -24,10 +24,10 @@ class memberRequest extends Request
     public function rules()
         {
             return [
-                'email' 	=> 	'required|email|unique:members',
-                'username' 	=> 	'required|alpha_num|unique:members',
+                'email' 	=> 	'required|email|unique:users',
+                'username' 	=> 	'required|alpha_num|unique:users',
                 'name'		=> 	'required',
-                'password'	=> 	'required'
+                'password'	=> 	'required|confirmed'
             ];
         }
         
@@ -40,7 +40,8 @@ class memberRequest extends Request
                 'username.alpha_num' 	=> 	'Username ต้องประกอบไปด้วย A-Z, a-z , 1-9 เที่านั้น ',
                 'username.unique' 	=> 	'ชื่อผู้ใช้นี้ถูกใช้งานไปก่อนหน้านี้แล้ว',
                 'name.required'		=> 	'กรุณาป้อนชื่อ',
-                'password.required'	=> 	'กรุณาป้อนรหัสผ่าน'
+                'password.required'	=> 	'กรุณาป้อนรหัสผ่าน',
+                'password.confirmed'    => 'รหัสผ่านไม่ตรงกัน โปรดลองอีกครั้ง'
             ];
         }
 }

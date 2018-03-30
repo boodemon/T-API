@@ -63,6 +63,7 @@ class FoodController extends Controller
     {
         $food = new Food;
         $food->food_name = $request->input('name');
+        $food->kcal = $request->input('kcal');
         if( $request->hasFile('image')){
             $file = $request->file('image');
 				$filename = time() . '.jpg';// Lib::encodelink( $file->getClientOriginalName() );
@@ -130,10 +131,11 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo '<pre>',print_r( $request->all() ),'</pre>';
+        //echo '<pre>',print_r( $request->all() ),'</pre>';
         $food = Food::where('id',$id)->first();
         if( $food ){
             $food->food_name = $request->input('name');
+            $food->kcal = $request->input('kcal');
             if( $request->hasFile('image')){
                 if( file_exists( $this->food_path . $food->food_image ) )
                     @File::delete( $this->food_path . $food->food_image );

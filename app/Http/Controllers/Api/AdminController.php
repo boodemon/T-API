@@ -31,7 +31,7 @@ class AdminController extends Controller
               'code'    => 204,
               'result'  => 'error',
               'data'    => false,
-          ]
+          ];
       }
       return Response()->json($rows);  //
     }
