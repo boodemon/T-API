@@ -16,6 +16,7 @@
                 <th class="w20"><input type="checkbox" id="checkAll"/></th>
                 <th class="w120">Image</th>
                 <th>Food name</th>
+                <th class="w120">Calorie</th>
                 <th class="w220">Category</th>
                 <th class="w220">Restourant</th>
                 <th class="w60">Active</th>
@@ -33,6 +34,7 @@
                         <img src="{{asset('public/images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
                     </td>
                     <td>{{ $row->food_name }}</td>
+                    <td class="text-right">{{ $row->kcal }} (kcal)</td>
                     <td>{{ @$group[$row->category_id]['name']}}</td>
                     <td class="text-center"><a href="#" class="show-price" food-id="{{ $row->id }}" title="Click show price list of food">{{ App\Models\Price::unit( $row->id ) }} ร้าน</a></td>
                     <td class="text-center">

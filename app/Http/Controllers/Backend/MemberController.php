@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Member;
+use App\User;
 
 class MemberController extends Controller
 {
     public function index()
     {
-        $rows = Member::where('active','!=','D')->orderBy('name')->paginate(24);
+        $rows = User::where('active','!=','D')
+                    ->where('user_type','member')
+                    ->orderBy('name')->paginate(24);
         $data = [
             'rows' => $rows,
             '_breadcrumb' => 'Administrator',
@@ -23,7 +25,7 @@ class MemberController extends Controller
 
         public function edit($id)
     {
-        $user = Member::where('id',$id)->first();
+        $user = User::where('id',$id)->first();
         if( $user){
 		$data = [
 			'data'  => $user,
@@ -41,7 +43,7 @@ class MemberController extends Controller
         public function store(Request $request)
     {
 			$id 			= $request->input('id');
-			$user 			= new Member;
+			$user 			= new User;
 			$user->name 	= $request->input('name');
 			$user->tel 		= $request->input('tel');
 			$user->active 	= $request->has('active') ? 'Y' : 'N';
@@ -50,14 +52,14 @@ class MemberController extends Controller
 				$user->password = bcrypt($request->input('password'));
 			}
 
-			$ec = Member::where('email',$request->input('email'))->first();
+			$ec = User::where('email',$request->input('email'))->first();
 			if(!$ec){
 				$user->email = $request->input('email');
 			}else{
 				return redirect()->back()->withErrors(['email' => 'Error! E-mail is already in use Please try again']);
 			}
 
-			$uc = Member::where('username',$request->input('username'))->first();
+			$uc = User::where('username',$request->input('username'))->first();
 			if(!$uc){
 				$user->username = $request->input('username');
 			}else{
@@ -70,7 +72,7 @@ class MemberController extends Controller
     }
         public function update(Request $request, $id)
     {
-			$user 		= Member::where('id',$id)->first();
+			$user 		= User::where('id',$id)->first();
 			$user->name 	= $request->input('name');
             $user->tel 		= $request->input('tel');
 			$username 	    = $user->username;
@@ -81,7 +83,7 @@ class MemberController extends Controller
 				$user->password = bcrypt($request->input('password'));
 			}
             if($request->input('email') != $email){
-					$c = Member::where('email',$request->input('email'))->first();
+					$c = User::where('email',$request->input('email'))->first();
 					if(!$c){
 						$user->email = $request->input('email');
 					}else{
@@ -89,7 +91,7 @@ class MemberController extends Controller
 					}
 			}
 			if($request->input('username') != $username){
-					$c = Member::where('username',$request->input('username'))->first();
+					$c = User::where('username',$request->input('username'))->first();
 					if(!$c){
 						$user->username = $request->input('username');
 					}else{
@@ -105,7 +107,7 @@ class MemberController extends Controller
     {
         $ids = explode('-',$id);
  
-            if( Member::whereIn('id',$ids)->update(['active' => 'D']) ){
+            if( User::whereIn('id',$ids)->update(['active' => 'D']) ){
                 $result = [
                     'result'    => 'successful',
                     'code'      => 200

@@ -20,7 +20,7 @@ class Auth0Controller extends Controller
     }
 
 
-    public function register(UserRequest $request)
+    public function register(memberRequest $request)
     {
         $row = new User;
         $row->name      = $request->input('name');

@@ -41,6 +41,11 @@ class User extends Authenticatable
         }
     }
 
+    public static function field($id = 0,$field='name'){
+        $row = User::where('id',$id)->first();
+        return $row ? $row->$field : false;
+    }
+
     public function attempt( $user ){
 
     }

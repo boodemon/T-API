@@ -1,0 +1,128 @@
+.share-btn-wrp {
+	list-style: none;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	width: 32px;
+	left: 0px;
+	position: fixed;
+	z-index:99999;
+}
+.share-btn-wrp .button-wrap{
+	text-indent:-100000px;
+	width:32px;
+	height: 32px;
+	cursor:pointer;
+	transition: width 0.1s ease-in-out;
+}
+.share-btn-wrp > .facebook{
+	background: url(share-icons.png) no-repeat -42px 0px;
+}
+.share-btn-wrp > .facebook:hover{
+	background: url(share-icons.png) no-repeat -4px -0px;
+	width:38px;
+}
+.share-btn-wrp > .twitter{
+	background: url(share-icons.png) no-repeat -42px -34px;
+}
+.share-btn-wrp > .twitter:hover{
+	background: url(share-icons.png) no-repeat -4px -34px;
+	width:38px;
+}
+.share-btn-wrp > .digg{
+	background: url(share-icons.png) no-repeat -42px -68px;
+}
+.share-btn-wrp > .digg:hover{
+	background: url(share-icons.png) no-repeat -4px -68px;
+	width:38px;
+}
+.share-btn-wrp > .line{
+	background: #00b900;/*url(share-icons.png) no-repeat -42px -68px;*/
+	width:32px;
+}
+.share-btn-wrp > .line:hover{
+	/*background: url(share-icons.png) no-repeat -4px -68px;*/
+	width:38px;
+}
+.share-btn-wrp > .line-it-button{
+	/*background: url(share-icons.png) no-repeat -42px -68px;*/
+}
+.share-btn-wrp > .line-it-button:hover{
+	/*background: url(share-icons.png) no-repeat -4px -68px;*/
+	width:38px;
+}
+.share-btn-wrp > .stumbleupon{
+	background: url(share-icons.png) no-repeat -42px -102px;
+}
+.share-btn-wrp > .stumbleupon:hover{
+	background: url(share-icons.png) no-repeat -4px -102px;
+	width:38px;
+}
+.share-btn-wrp > .delicious{
+	background: url(share-icons.png) no-repeat -42px -136px;
+}
+.share-btn-wrp > .delicious:hover{
+	background: url(share-icons.png) no-repeat -4px -136px;
+	width:38px;
+}
+.share-btn-wrp > .print{
+	background: url(share-icons.png) no-repeat -42px -136px;
+}
+.share-btn-wrp > .print:hover{
+	background: url(share-icons.png) no-repeat -4px -136px;
+	width:38px;
+}
+.share-btn-wrp > .pinterest{
+	background: url(share-icons.png) no-repeat -42px -340px;
+}
+.share-btn-wrp > .pinterest:hover{
+	background: url(share-icons.png) no-repeat -4px -340px;
+	width:38px;
+	
+}.share-btn-wrp > .gplus{
+	background: url(share-icons.png) no-repeat -42px -170px;
+}
+.share-btn-wrp > .gplus:hover{
+	background: url(share-icons.png) no-repeat -4px -170px;
+	width:38px;
+}
+.share-btn-wrp > .email{
+	background: url(share-icons.png) no-repeat -42px -408px;
+}
+.share-btn-wrp > .email:hover{
+	background: url(share-icons.png) no-repeat -4px -408px;
+	width:38px;
+}
+
+li.line{
+	width:32px;
+	height: 32px;
+	overflow:hidden;
+	position:relative;
+}
+
+
+
+@media all and (min-width: 700px) {
+	.share-btn-wrp{
+		top:40%;
+	}
+}
+@media all and (max-width: 699px) {
+	.share-btn-wrp{
+		width: 100%;
+		text-align: center;
+		position: fixed;
+		bottom: 1px;
+	}
+	.share-btn-wrp .button-wrap {
+		display: inline-block;
+		margin-left: -2px;
+		margin-right: -2px;
+	}
+	li.line{
+		display: inline-block;
+		top:15px;
+	}
+
+}

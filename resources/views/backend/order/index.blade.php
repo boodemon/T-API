@@ -4,8 +4,7 @@
       <div class="card-header">
         <i class="fa fa-user"></i> Food data
         <div class="pull-right">
-            <button type="button" id="btn-new" data-id="0" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
-            <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i> Delete</button>
+
         </div>
       </div>
       
@@ -16,6 +15,7 @@
                 <th class="w20"><input type="checkbox" id="checkAll"/></th>
                 <th class="w120">Order No</th>
                 <th class="w120">Date</th>
+                <th class="w120">Job Name</th>
                 <th class="">Customer</th>
                 <th class="w220">Amount</th>
                 <th class="w120">status</th>
@@ -29,17 +29,16 @@
                     <td class="text-center">
                         <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
                     </td>
-                    <td>
-                        <img src="{{asset('public/images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
-                    </td>
-                    <td>{{ $row->food_name }}</td>
-                    <td>{{ $group[$row->category_id]['name']}}</td>
-                    <td class="text-center"><a href="#" class="show-price" food-id="{{ $row->id }}" title="Click show price list of food">{{ App\Models\Price::unit( $row->id ) }} ร้าน</a></td>
+                    <td>#{{ sprintf('%05d',$row->id) }}</td>
+                    <td>{{ date('d M Y',strtotime( $row->created_at) ) }}</td>
+                    <td>{{ $row->jobname }}</td>
+                    <td>{{ App\User::field( $row->user_id ) }}</td>
+                    <td>{{ $row->price }}</td>
                     <td class="text-center">
-                        {!! Lib::active( $row->active ) !!}
+                        <span class="label">{{ $row->status }}</span>
                     </td>
                     <td class="action">
-                        <a title="Edit" class="text-primary" href="{{ url('foods/food/'. $row->id .'/edit') }}" ><i class="icon-note"></i></a>
+                        <a title="Edit" class="text-primary" href="{{ url('order/'. $row->id .'/edit') }}" ><i class="icon-note"></i></a>
                         <a title="Delete" class="text-danger onDelete" data-id="{{ $row->id }}" ><i class="icon-trash"></i></a>
                     </td>
                 </tr>

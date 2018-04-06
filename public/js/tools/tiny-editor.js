@@ -49,9 +49,9 @@ var tiny = {
 				{title: 'Test template 1', content: 'Test 1'},
 				{title: 'Test template 2', content: 'Test 2'}
 			],
-			external_filemanager_path: this.base_path() + "/public/admin/lib/filemanager/",
+			external_filemanager_path: this.base_path() + "/public/lib/filemanager/",
 			filemanager_title:"File Explorer" ,
-			external_plugins: { "filemanager" : this.base_path() + "/public/admin/lib/filemanager/plugin.min.js"}
+			external_plugins: { "filemanager" : this.base_path() + "/public/lib/filemanager/plugin.min.js"}
 		});
 
 	},
@@ -82,9 +82,9 @@ var tiny = {
 				{title: 'Test template 1', content: 'Test 1'},
 				{title: 'Test template 2', content: 'Test 2'}
 			],
-			external_filemanager_path: this.base_path() + "/public/admin/lib/filemanager/",
+			external_filemanager_path: this.base_path() + "/public/lib/filemanager/",
 			filemanager_title:"File Explorer" ,
-			external_plugins: { "filemanager" : this.base_path() + "/public/admin/lib/filemanager/plugin.min.js"}
+			external_plugins: { "filemanager" : this.base_path() + "/public/lib/filemanager/plugin.min.js"}
 		});
 
 	},

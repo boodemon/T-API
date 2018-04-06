@@ -18,6 +18,7 @@
                 <th class="w120">Email</th>
                 <th class="">Name</th>
                 <th class="w220">Tel</th>
+                <th class="w120">Social</th>
                 <th class="w120">status</th>
                 <th class="w80">Action</th>
             </tr>
@@ -33,6 +34,14 @@
                     <td>{{ $row->email }}</td>
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->tel }}</td>
+                    <td class="text-center">
+                        @if( !empty( $row->facebook_id ) )
+                            <i class="fa fa-facebook-official fa-2x text-primary"></i>
+                        @endif
+                        @if( !empty( $row->google_id ) )
+                            <i class="fa fa-google-plus-square fa-2x text-danger"></i>
+                        @endif
+                    </td>
                     <td class="text-center">
                         {!! Lib::active( $row->active ) !!}
                     </td>

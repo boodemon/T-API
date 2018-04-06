@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'mobile',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'session',
             'provider' => 'users',
         ],
 
@@ -51,12 +51,12 @@ return [
             'provider' => 'users',
         ],
         'mobile' => [
-            'driver'    => 'session',
-            'provider'  => 'users',
+            'driver' => 'jwt-auth',
+            'provider' => 'members',
         ],
         'admin' => [
             'driver' => 'session',
-            'provider' => 'members',
+            'provider' => 'admin',
         ],
 
     ],

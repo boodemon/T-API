@@ -23,7 +23,9 @@ class UserController extends Controller
 
     public function index()
     {
-        $rows = User::where('active','!=','D')->orderBy('name')->paginate(24);
+        $rows = User::where('active','!=','D')
+                    ->where('user_type','admin')
+                    ->orderBy('name')->paginate(24);
         $data = [
             'rows' => $rows,
             '_breadcrumb' => 'Administrator',

@@ -38,6 +38,9 @@ Route::group(['middleware'=>'admin'], function () {
     Route::post('member/checker', 'Backend\MemberController@checker');
     Route::resource('report','Backend\ReportController');
     Route::resource('user','Backend\UserController');
+    Route::get('content/aboutus', 'Backend\ContentController@aboutus');
+    Route::get('content/privacy-policy', 'Backend\ContentController@policy');
+    Route::post('content/action-save', 'Backend\ContentController@save');
     Route::get('user/profile', 'Backend\UserController@getProfile');
     Route::post('user/profile', 'Backend\UserController@postProfile');
     Route::post('user/checker', 'Backend\UserController@checker');
@@ -55,12 +58,15 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
     //
     Route::group(['middleware' => 'jwt-member'],function(){
         Route::resource('order','Api\OrderController');
+        Route::post('order-confirmation','Api\OrderController@confirmation');
         Route::resource('bank','Api\BankController');
         Route::resource('category','Api\CategoryController');
         Route::get('foods/{id?}','Api\FoodController@index');
         Route::resource('food','Api\FoodController');
         Route::get('food-price/{food_id?}','Api\FoodController@pricelist');
+        Route::get('aboutus','Api\ContentController@aboutus');
         Route::get('user','Api\MemberController@check');
+        Route::post('user/change-password','Api\MemberController@changPassword');
     });
 
     Route::get('/', function () {
@@ -80,3 +86,4 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
 });
 
 
+    Route::get('privacy-policy', 'Front\ContentController@policy');

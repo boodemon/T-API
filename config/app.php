@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Bangkok',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -150,7 +150,6 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        
 
         /*
          * Application Service Providers...

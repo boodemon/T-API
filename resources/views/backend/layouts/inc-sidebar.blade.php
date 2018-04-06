@@ -30,6 +30,12 @@
             <a class="nav-link"  href="{{ url('payment') }}"><i class="icon-wallet"></i> ช่องทางชำระเงิน</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link"  href="{{ url('content/aboutus') }}"><i class="icon-wallet"></i> About us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  href="{{ url('content/privacy-policy') }}"><i class="icon-wallet"></i> นโยบายความเป็นส่วนตัว</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link"  href="{{ url('report') }}"><i class="icon-doc"></i> รายงานการขาย</a>
         </li>
         <li class="nav-item">

@@ -34,6 +34,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-md-2 form-control-label">Kcal : </label>
+                    <div class="col-md-2">
+                        <input type="text" id="kcal" name="kcal" class="form-control" value="{{ $row ? $row->kcal : old('kcal') }}" />
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-md-2 form-control-label">Food Group : </label>
                     <div class="col-md-6">
                         <select id="groups" name="groups" class="form-control">

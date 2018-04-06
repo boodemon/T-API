@@ -3,17 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-
+use Request as Req;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\OrderHead;
+use App\Models\OrderDetail;
+use App\User;
+
 
 class BankController extends Controller
 {
     public function index(){
+        $user = User::toUser(Req::input('token'));
         $rows = Bank::where('active','Y')->orderBy('bank_sort')->orderBy('bank_name')->get();
+        $orders = OrderHead::where('user_id',$user->id)->where('status','new')->orderBy('id')->get();
+
         if( $rows ){
             $jdata = [];
+            $hdata = [];
+            if( $orders ){
+                foreach($orders as $order){
+                    $hdata[] = $this->orderHeadField( $order );
+                }   
+            }
             foreach( $rows as $row ){
                 $jdata[] = $this->field( $row );
             }
@@ -44,5 +57,22 @@ class BankController extends Controller
             'created_at'    =>  date('Y-m-d H:i:s', strtotime( $row->created_at ) ) ,
             'updated_at'    =>  date('Y-m-d H:i:s', strtotime( $row->updated_at ) ),
         ];
+    }
+
+    public function orderHeadField( $row ){
+        return [
+            'id'            =>  $row->id ,
+            'user_id'       =>  $row->user_id ,
+            'jobname'       =>  $row->jobname ,
+            'address'       =>  $row->address ,
+            'jobdate'       =>  $row->jobdate ,
+            'remark'        =>  $row->remark ,
+            'price'         =>  $row->price ,
+            'charge'        =>  $row->charge ,
+            'tax'           =>  $row->tax ,
+            'status'        =>  $row->status ,
+            'created_at'    =>  date('Y-m-d H:i:s', strtotime( $row->created_at ) ) ,
+            'updated_at'    =>  date('Y-m-d H:i:s', strtotime( $row->updated_at ) ),
+                ];
     }
 }

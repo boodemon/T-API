@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
+use App\Models\OrderHead;
 
 class OrderController extends Controller
 {
@@ -17,8 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $rows = OrderHead::where('status','!=','finish')->orderBy('updated_at','DESC')->paginate(50);
         $data = [
-            'rows' => false,
+            'rows' => $rows,
             '_breadcrumb'	=> 'Order'
         ];
         return view('backend.order.index',$data);
