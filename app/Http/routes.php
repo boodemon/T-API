@@ -26,6 +26,10 @@ Route::resource('login', 'Backend\AuthController');
 
 Route::group(['middleware'=>'admin'], function () {
     Route::resource('dashboard', 'Backend\DashboardController');
+    Route::get('order/tracking/{id?}', 'Backend\OrderController@tracking');
+    Route::get('order/{id?}/print', 'Backend\OrderController@prints');
+    Route::get('order/{id?}/export', 'Backend\OrderController@export');
+
     Route::resource('order', 'Backend\OrderController');
     Route::resource('foods/category','Backend\CategoryController');
     Route::resource('foods/restourant', 'Backend\RestourantController');
@@ -62,6 +66,7 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
         Route::resource('bank','Api\BankController');
         Route::resource('category','Api\CategoryController');
         Route::get('foods/{id?}','Api\FoodController@index');
+        Route::get('restourant-foods/{id?}', 'Api\FoodController@restourant');
         Route::resource('food','Api\FoodController');
         Route::get('food-price/{food_id?}','Api\FoodController@pricelist');
         Route::get('aboutus','Api\ContentController@aboutus');

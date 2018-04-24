@@ -24,6 +24,7 @@
                         var res = data.data;
                         $('input[name="id"]').val( res.id );
                         $('input[name="name"]').val(res.name );
+                        $('select[name="category_option"]').val(res.category_option );
                         $('input[name="category_sort"]').val(res.category_sort );
                         $('input[name="_method"]').val('PUT');
                         if (res.active == 'Y'){

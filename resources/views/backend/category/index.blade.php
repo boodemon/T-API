@@ -13,12 +13,13 @@
         <table class="table table-sm table-data table-bordered">
           <thead>
             <tr>
-              <th><input type="checkbox" id="checkAll"/></th>
-              <th>Image</th>
+              <th class="w60"><input type="checkbox" id="checkAll"/></th>
+              <th class="w120">Image</th>
               <th>Name</th>
-              <th>Sort</th>
-              <th>Active</th>
-              <th>Action</th>
+              <th class="w120">Show</th>
+              <th class="w80">Sort</th>
+              <th class="w120">Active</th>
+              <th class="w120">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -30,7 +31,8 @@
               </td>
               <td><img src="{{asset('public/images/category/' . $row->image) }}" class="img-responsive" width="120" /></td>
               <td>{{ $row->name }}</td>
-              <td>{{ $row->category_sort }}</td>
+              <td class="text-center">{{ strtoupper( $opts[$row->category_option] ) }}</td>
+              <td class="text-center">{{ $row->category_sort }}</td>
               <td class="text-center">
                   {!! Lib::active($row->active) !!}
               </td>

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Lib;
 class Category extends Model
 {
     protected $table = 'categories';
@@ -20,6 +20,7 @@ class Category extends Model
                     'type'  => $row->type,
                     'active'    => $row->active,
                     'sort'      => $row->category_sort,
+                    'option'    => $row->category_option,
                     'created'   => $row->created_at,
                     'updated'   => $row->updated_at
                 ];
@@ -52,6 +53,20 @@ class Category extends Model
     public static function field($id = 0, $field='name'){
         $row = Category::where('id',$id)->first();
         return $row ? $row->$field : false;
+    }
+
+    public static function fieldRows($row){
+        return [
+            'id'    => $row->id,
+            'name' => $row->name,
+            'image' => Lib::exsImg( 'public/images/category/', $row->image  ),
+            'type' => $row->type,
+            'active' => $row->active,
+            'option' => $row->category_option,
+            'category_sort' => $row->category_sort,
+            'created_at'    => date('Y-m-d H:i:s', strtotime($row->created_at) ),
+            'updated_at'    => date('Y-m-d H:i:s', strtotime($row->updated_at) ),
+        ];
     }
 
     

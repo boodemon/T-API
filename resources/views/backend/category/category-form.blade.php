@@ -35,6 +35,14 @@
             </div>
 
             <div class="form-group row">
+              <label class="col-md-2 form-control-label">Show : </label>
+              <div class="col-md-4">
+                <select name="category_option" class="form-control">
+                  @foreach( $opts as $optCode => $optVal )
+                    <option value="{{ $optCode }}">{{ $optVal }}</option>
+                  @endforeach
+                </select>
+              </div>
               <label class="col-md-2 form-control-label">Sort : </label>
               <div class="col-md-3">
                 <input type="text" class="form-control" name="category_sort" id="category_sort"/>

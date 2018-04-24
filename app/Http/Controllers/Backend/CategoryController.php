@@ -15,6 +15,10 @@ class CategoryController extends Controller
 {
     public function __construct(){
         $this->path = public_path() . '/images/category/';
+        $this->options = [
+            'food' => 'FOOD',
+            'shop' => 'RESTOURANT'
+        ];
     }
 
     public function index(){
@@ -22,9 +26,10 @@ class CategoryController extends Controller
                         ->orderBy('name')
                         ->paginate(25);
         $data = [
-            'rows' => $rows,
-            'img_path' => $this->path,
-            '_breadcrumb'	=> 'Category'
+            'rows'          => $rows,
+            'img_path'      => $this->path,
+            '_breadcrumb'	=> 'Category',
+            'opts'          => $this->options,
         ];
         return view('backend.category.index',$data);
     }
@@ -34,6 +39,7 @@ class CategoryController extends Controller
         $row = new Category;
         $row->name = $request->input('name');
         $row->category_sort = $request->input('category_sort');
+        $row->category_option = $request->input('category_option');
         $row->active = $request->has('active') ? 'Y':'N';
         if( $request->hasFile('image')){
             $file = $request->file('image');
@@ -66,7 +72,8 @@ class CategoryController extends Controller
             $res = [
                 'result'    => 'successful',
                 'data'      => $row,
-                'code'      => 200
+                'code'      => 200,
+                'opts'      => $this->options
             ];
         }else{ 
             $res = [
@@ -85,6 +92,7 @@ class CategoryController extends Controller
         $row = Category::where('id',$id)->first();
         if( $row ){
             $row->name = $request->input('name');
+            $row->category_option = $request->input('category_option');
             $row->category_sort = $request->input('category_sort');
             $row->active = $request->has('active') ? 'Y' : 'N';
             if( $request->hasFile('image') ){

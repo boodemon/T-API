@@ -1,0 +1,33 @@
+@page {
+    size: A4;
+    margin: 10mm;
+  }
+  @media print {
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      background:#fff;
+    }
+    /* ... the rest of the rules ... */
+  }
+
+body{
+    font-family: 'cs_chatthaiuiregular';
+    background:#fff;
+}
+.row{
+    padding:4px;
+    margin:4px;
+}
+table{
+    width:100%;
+}
+table,td,th,div,span,p{
+    font-family: 'cs_chatthaiuiregular';
+}
+strong,.bold{
+    font-family: 'cs_chatthaiuiregular';
+}
+.thai-font{
+    font-family: 'cs_chatthaiuiregular';
+}

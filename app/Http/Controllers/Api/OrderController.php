@@ -241,7 +241,7 @@ class OrderController extends Controller
                         .'<p><img src="'. asset('public/images/attach/'. $filename) .'" />';
         }
         Message::sender(1,$user->id,$subject,$message);
-        OrderHead::where('id',$request->input('ref_id') )->update(['status'=>'confirmed']);
+        OrderHead::where('id',$request->input('ref_id') )->update(['status'=>'confirmation']);
 
         $data = [
             'code' => 200,

@@ -1,0 +1,29 @@
+
+@font-face {
+    font-family: 'cs_chatthairegular';
+    src: url('cschatthai.eot');
+    src: url('cschatthai.eot?#iefix') format('embedded-opentype'),
+         url('cschatthai.woff2') format('woff2'),
+         url('cschatthai.woff') format('woff'),
+         url('cschatthai.ttf') format('truetype'),
+         url('cschatthai.svg#cs_chatthairegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'cs_chatthaiuiregular';
+    src: url('cschatthaiui.eot');
+    src: url('cschatthaiui.eot?#iefix') format('embedded-opentype'),
+         url('cschatthaiui.woff2') format('woff2'),
+         url('cschatthaiui.woff') format('woff'),
+         url('cschatthaiui.ttf') format('truetype'),
+         url('cschatthaiui.svg#cs_chatthaiuiregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

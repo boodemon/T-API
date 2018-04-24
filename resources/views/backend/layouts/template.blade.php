@@ -14,7 +14,7 @@
       <ol class="breadcrumb">
         @if( $_breadcrumb != 'Dashboard' )
         <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active">{{ $_breadcrumb ? $_breadcrumb : '' }}</li>
+        {!! Lib::bcm( $_breadcrumb ) !!}
         @else
         <li class="breadcrumb-item active">Dashboard</li>
         @endif
