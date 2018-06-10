@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Food;
+use App\Models\Restourant;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -21,9 +23,20 @@ class CategoryController extends Controller
         ];
     }
 
-    public function index(){
-        $rows = Category::orderBy('category_sort')
-                        ->orderBy('name')
+    public function index(Request $request){
+        $rows = Category::orderBy('category_sort');
+        if( $request->exists('keywords') ){
+            $keywords = $request->input('keywords');
+            if( !empty( $keywords ) ){
+                $rows = $rows->where( function($query) use($keywords){
+                    $keys = explode(' ', $keywords);
+                    foreach($keys as $no => $key){
+                        $query->where('name','like','%'.$key .'%');
+                    }
+                });
+            }
+        }
+        $rows = $rows->orderBy('name')
                         ->paginate(25);
         $data = [
             'rows'          => $rows,
@@ -147,5 +160,33 @@ class CategoryController extends Controller
     
             }
         return Response()->json($result);
+    }
+    public function foods($id = 0){
+        $category = Category::where('id', $id)->first();
+        $jsdata = [];
+            $rows = Food::where('category_id',$id)
+                            ->where('active','Y')
+                            ->orderBy('food_name')->get();         
+            $data = [
+                'code' => 200,
+                'rows' => $rows
+            ];
+            return view('backend.category.table-foods',$data);
+    }
+    public function restourant($id = 0){
+        $category = Category::where('id', $id)->first();
+        $jsdata = [];
+        $rows = Restourant::WhereRaw('FIND_IN_SET('. $id .', category_id)')
+                            ->orderBy('restourant')
+                            ->get();
+            if( $rows ){
+                foreach( $rows as $row ){
+                    $jsdata[] = Restourant::fieldRows($row);
+                }
+            }
+            $data = [
+                'rows' => $rows,
+            ];    
+            return view('backend.category.table-restourant',$data);
     }
 }

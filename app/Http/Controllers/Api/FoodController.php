@@ -10,6 +10,7 @@ use App\Models\Food;
 use App\Models\Price;
 use App\Models\Restourant;
 use App\Models\Category;
+use App\Models\Rating;
 use App\Lib;
 class FoodController extends Controller
 {
@@ -116,6 +117,7 @@ class FoodController extends Controller
                    'food_image' => Lib::exsImg( 'public/images/foods' , $row->food_image ),
                    'restourants' => $row->restourants,
                    'active' => $row->active,
+                   'rating'     => @json_decode( Rating::Score($row->id,'detail') ),
                    'created_at' => date('Y-m-d H:i:s', strtotime($row->created_at) ),
                    'updated_at' => date('Y-m-d H:i:s', strtotime($row->updated_at) )
                 ];
@@ -129,6 +131,7 @@ class FoodController extends Controller
             'restourant_id' => $row->restourant_id,
             'restourant'    => Restourant::field($row->restourant_id),
             'price'         => $row->price,
+            'rating'        => @json_decode( Rating::Score($row->id,'detail') ),
             'created_at'    => date('Y-m-d H:i:s', strtotime($row->created_at) ),
             'updated_at'    => date('Y-m-d H:i:s', strtotime($row->updated_at) )
         ];

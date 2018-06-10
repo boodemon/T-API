@@ -4,11 +4,22 @@
       <div class="card-header">
         <i class="fa fa-user"></i> Food data
         <div class="pull-right">
-
+            <button type="button" class="btn btn-sm btn-outline-primary btn-filter"><i class="fa fa-filter"></i> FILTER</button>
         </div>
       </div>
-      
       <div class="card-body">
+      @if( Request::exists('status') )
+            <div class="alert alert-primary">
+                <p><strong><u>FILTER BY</u></strong></p>
+                <p>
+                    <strong>STATUS : </strong> {{ @$status[Request::input('status')] }} , 
+                    <strong>BY : </strong> {{ @$field[Request::input('field')] }} , 
+                    <strong>KEYWORDS : </strong> {{ Request::input('keywords') }}
+                </p>
+            </div>
+      @endif
+      
+      
         <table class="table table-sm table-data table-bordered">
           <thead>
             <tr>
@@ -51,12 +62,16 @@
               @endif
           </tbody>
         </table>
+        <div class="text-center">
+            {!! $rows->links() !!}
+        </div>
     </div>
 </div>
 @endsection
 @section('modal')
     @include('backend.order.modal-form')
     @include('backend.order.modal-tracking')
+    @include('backend.order.modal-filter')
 @endsection
 @section('javascript')
     <script src="{{ asset('public/build/js/order-index.js') }}"></script>

@@ -54,4 +54,8 @@ function food(){
             });
             $('#modal-price').modal('show');
         });
+        $('.btn-filter').on('click',function(e){
+            $('#food-filter').modal('show');
+        });
+
 }(jQuery));

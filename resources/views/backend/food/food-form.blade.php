@@ -1,4 +1,7 @@
 @extends('backend.layouts.template')
+@section('stylesheet')
+  <link href="{{ asset('public/lib/jquery-ui-1.12.1.full/jquery-ui.min.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="card">
  <div class="card-header">
@@ -56,26 +59,34 @@
                         </label>
                     </div>
                 </div>
-
+                <hr/>
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label">&nbsp;</label>
-                    <div class="col-md-8">
-                        <div class="price-list">
-                        </div>
+                    <label class="form-control-label col-md-2">Restourant : </label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="restourant" name="restourant" placholder="Restourant..." />
+                    </div>
+                    <label class="form-control-label col-md-2 text-right">Price : </label>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" name="price" value="" id="price" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-success btn-add"><i class="fa fa-plus"></i> ADD</button>
                     </div>
                 </div>
-        
-                
-        
+                <h3>Restourant Price List</h3>
+                <div class="form-group row price-list">
+                </div>
+
                 <div class="form-groups text-right">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> SAVE</button>
-                    <button type="button" class="btn btn-default btn-cancel"><i class="fa fa-save"></i> CANCEL</button>
+                    <button type="button" class="btn btn-outline-dark btn-cancel"><i class="fa fa-save"></i> CANCEL</button>
                 </div>
             </form>
 </div>
 </div>
 @endsection
 @section('javascript')
+    <script src="{{ asset('public/lib/jquery-ui-1.12.1.full/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('public/js/tools/image.js') }}"></script>
     <script src="{{ asset('public/build/js/food-form.js') }}"></script>
 @endsection

@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
 use Request as Req;
 use Auth;
+use Mail;
 
 class Auth0Controller extends Controller
 {
@@ -35,6 +36,17 @@ class Auth0Controller extends Controller
                 'code'      => 200,
                 'result'    => 'successful',
             ];
+            $subject = 'Welcom to FOOD@SET member';
+            $fromMail = 'info@foodatset.com';
+            $fromName = 'FOOD @ SET';        
+            Mail::send('emails.signup',['request' 	=> $request,'subject'	=> $subject,
+				], function ( $message ) use ($request,$subject,$fromMail,$fromName){
+                    $message->from($fromMail,$fromName );
+                    $message->sender($fromMail,$fromName);
+                    $message->replyTo($fromMail, 'No Reply email');
+                    $message->to([$request->input('email') ]);
+					$message->subject( $subject );
+				});
         }else{
             $data = [
                 'code'      => 202,
@@ -105,6 +117,19 @@ class Auth0Controller extends Controller
                 'auth'     => base64_encode( $token ),
                 'data'      => Auth::guard('api')->user()
             ];
+            if( !$chk ){
+                $subject = 'Welcom to FOOD@SET member';
+                $fromMail = 'info@foodatset.com';
+                $fromName = 'FOOD @ SET';        
+                Mail::send('emails.signup-fb',[	'request' 	=> $request,'subject'	=> $subject, 'password' => $password,'social' => 'facebook'], 
+                    function ( $message ) use ($request,$subject,$fromMail,$fromName ,$password){
+                    $message->from($fromMail,$fromName );
+                    $message->sender($fromMail,$fromName);
+                    $message->replyTo($fromMail, 'No Reply email');
+                    $message->to([$request->input('email') ]);
+                    $message->subject( $subject );
+                });
+            }
         }else{
             $data = [
                 'code'      => 202,
@@ -136,6 +161,19 @@ class Auth0Controller extends Controller
                 'auth'     => base64_encode( $token ),
                 'data'      => Auth::guard('api')->user()
             ];
+            if( !$chk ){
+                $subject = 'Welcom to FOOD@SET member';
+                $fromMail = 'info@foodatset.com';
+                $fromName = 'FOOD @ SET';        
+                Mail::send('emails.signup-fb',[	'request' 	=> $request,'subject'	=> $subject, 'password' => $password,'social' => 'google'], 
+                    function ( $message ) use ($request,$subject,$fromMail,$fromName ,$password){
+                    $message->from($fromMail,$fromName );
+                    $message->sender($fromMail,$fromName);
+                    $message->replyTo($fromMail, 'No Reply email');
+                    $message->to([$request->input('email') ]);
+                    $message->subject( $subject );
+                });
+            }
         }else{
             $data = [
                 'code'      => 202,
@@ -144,6 +182,39 @@ class Auth0Controller extends Controller
         }
         return response()->json( $data );    
     }
+
+    public function forgot(Request $request){
+        $row =  User::where('email',$request->input('email') )
+                        ->where('user_type','member')->first();
+        if( $row ){
+            $password       = $this->randomPassword();
+            $row->password  = bcrypt( $password );
+            $row->save();
+            $data = [
+                'code'      => 200,
+                'result'    => 'successful',
+            ];        
+            $subject = 'Reset member password FOOD@SET member';
+            $fromMail = 'support@foodatset.com';
+            $fromName = 'FOOD @ SET';        
+            Mail::send('emails.forgot',[	'request' 	=> $request,'subject'	=> $subject, 'password' => $password,'social' => 'google'], 
+                function ( $message ) use ($request,$subject,$fromMail,$fromName ,$password){
+                $message->from($fromMail,$fromName );
+                $message->sender($fromMail,$fromName);
+                $message->replyTo($fromMail, 'No Reply email');
+                $message->to([$request->input('email') ]);
+                $message->subject( $subject );
+            });
+        }else{
+            $data = [
+                'code'      => 202,
+                'result'    => 'error'
+            ];
+        }
+        return response()->json( $data );    
+
+    }
+
     public function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array(); //remember to declare $pass as an array
@@ -153,5 +224,23 @@ class Auth0Controller extends Controller
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+    public function testMail(){
+        $subject = 'Welcom to www.railworldwide.com member';
+        $fromMail = 'info@railworldwide.com';
+        $fromName = 'Railworldwide Co., Ltd.';
+        Mail::send('emails.test',[], 
+            function ( $message ) use ($subject,$fromMail,$fromName){
+            $message->from($fromMail,$fromName );
+            $message->to(['nong.wasantasiri@gmail.com' ]);
+            $message->subject( $subject );
+        });
+
+    }
+
+    public function createText(Request $request){
+		$file = storage_path().'/_tmp/' . time() . '.txt';
+        File::put( $file, json_encode( $request->all() ) );
     }
 }

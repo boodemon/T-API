@@ -22,6 +22,8 @@ Route::get('/', function () {
     }
 });
 
+Route::post('create-text','Api\Auth0Controller@createText');
+
 Route::resource('login', 'Backend\AuthController');
 
 Route::group(['middleware'=>'admin'], function () {
@@ -31,16 +33,22 @@ Route::group(['middleware'=>'admin'], function () {
     Route::get('order/{id?}/export', 'Backend\OrderController@export');
 
     Route::resource('order', 'Backend\OrderController');
+    Route::get('foods/category-food/{id?}','Backend\CategoryController@foods');
+    Route::get('foods/category-restourant/{id?}','Backend\CategoryController@restourant');
     Route::resource('foods/category','Backend\CategoryController');
+    Route::get('foods/restourant-food/{id?}','Backend\RestourantController@foods');
     Route::resource('foods/restourant', 'Backend\RestourantController');
     Route::resource('foods/food','Backend\FoodController');
+    Route::get('foods/price-restourant/{id?}', 'Backend\FoodController@restourant');
     Route::get('foods/price/{id?}/{food_id?}', 'Backend\FoodController@price');
+    Route::get('foods/price-remove/{id?}', 'Backend\FoodController@priceRemove');
     Route::get('foods/price-list/{food_id?}', 'Backend\FoodController@price_list');
 
     Route::resource('payment','Backend\PaymentController');
     Route::resource('member','Backend\MemberController');
     Route::post('member/checker', 'Backend\MemberController@checker');
     Route::resource('report','Backend\ReportController');
+    Route::get('report/{type?}/{file?}','Backend\ReportController@export');
     Route::resource('user','Backend\UserController');
     Route::get('content/aboutus', 'Backend\ContentController@aboutus');
     Route::get('content/privacy-policy', 'Backend\ContentController@policy');
@@ -50,6 +58,7 @@ Route::group(['middleware'=>'admin'], function () {
     Route::post('user/checker', 'Backend\UserController@checker');
     Route::get('logout','Backend\AdminController@logout');
 });
+Route::get('test-mail','Api\Auth0Controller@testMail');
 
 // Start API Mobile and single page app //
 Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
@@ -59,12 +68,14 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
     Route::post('auth0/facebook','Api\Auth0Controller@facebook_app');
     Route::post('auth0/checkuser','Api\Auth0Controller@checkuser');
     Route::post('auth0/login','Api\Auth0Controller@login');
+    Route::post('auth0/forgot','Api\Auth0Controller@forgot');
     //
     Route::group(['middleware' => 'jwt-member'],function(){
         Route::resource('order','Api\OrderController');
         Route::post('order-confirmation','Api\OrderController@confirmation');
         Route::resource('bank','Api\BankController');
         Route::resource('category','Api\CategoryController');
+        Route::resource('rating','Api\RatingController');
         Route::get('foods/{id?}','Api\FoodController@index');
         Route::get('restourant-foods/{id?}', 'Api\FoodController@restourant');
         Route::resource('food','Api\FoodController');
@@ -91,4 +102,4 @@ Route::group(['middleware'=>'cors','prefix' => 'api'],function(){
 });
 
 
-    Route::get('privacy-policy', 'Front\ContentController@policy');
+Route::get('privacy-policy', 'Front\ContentController@policy');

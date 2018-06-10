@@ -12,6 +12,8 @@ use App\Models\Food;
 use App\Models\Price;
 use Image;
 use File;
+use DB;
+use Lib;
 
 class FoodController extends Controller
 {
@@ -23,12 +25,30 @@ class FoodController extends Controller
     public function __construct(){
         $this->food_path = public_path() .'/images/foods/';
     }
-    public function index()
+    public function index(Request $request)
     {
-        $rows = Food::orderBy('food_name')->paginate(24);
+        $category = 'ALL';
+        $rows = Food::orderBy('food_name');
+        if( $request->exists('keywords') ){
+            $keywords = $request->input('keywords');
+            if( !empty( $keywords ) ){
+                $rows = $rows->where( function($query) use($keywords){
+                    $keys = explode(' ', $keywords);
+                    foreach($keys as $no => $key){
+                        $query->where('food_name','like','%'.$key .'%');
+                    }
+                });
+            }
+        }
+        if( $request->exists('category') &&  !empty( $request->input('category') )){
+            $rows = $rows->where('category_id', $request->input('category'));
+            $category = Category::field( $request->input('category') );
+        }
+            $rows = $rows->paginate(24);
         $data = [
             'rows'  => $rows,
             'group' => Category::queryJson() ,
+            'category' => $category,
             '_breadcrumb'	=> 'Food'
         ];
         return view('backend.food.index',$data);
@@ -76,15 +96,21 @@ class FoodController extends Controller
         $food->active = $request->has('active') ? 'Y' : 'N';
         $food->category_id = $request->input('groups');
         $food->save();
-        //$price = [];
-        if( $request->input('restourant') ){
-            foreach( $request->input('restourant') as $idx => $data ){
-                $price = new Price;
+        if( $request->exists('price.id') ){
+            foreach( $request->input('price.id') as  $idx => $data ){
+                $restourant_id  = $request->input('price.restourant_id.'. $idx);
+                $uprice          = $request->input('price.price.'. $idx);                    
+                $cprice = Price::where('food_id',$food->id)
+                                ->where('restourant_id',$restourant_id)
+                                ->first();
+
+                $price = $cprice ? $cprice : new Price;
                 $price->food_id         = $food->id;
                 $price->category_id     = $request->input('groups');
-                $price->restourant_id   = $data;
-                $price->price           = $request->input('unit-price.'. $data);
+                $price->restourant_id   = $restourant_id;
+                $price->price           = $uprice;
                 $price->save();
+                
             }
         }
         return redirect('foods/food');
@@ -132,6 +158,7 @@ class FoodController extends Controller
     public function update(Request $request, $id)
     {
         //echo '<pre>',print_r( $request->all() ),'</pre>';
+        
         $food = Food::where('id',$id)->first();
         if( $food ){
             $food->food_name = $request->input('name');
@@ -151,30 +178,27 @@ class FoodController extends Controller
             $food->active       = $request->has('active') ? 'Y' : 'N';
             $food->category_id  = $request->input('groups');
             $food->save();
-            //$price = [];
-            @Price::where('food_id',$id)
-                    ->whereNotIn( 'restourant_id', $request->input('restourant') )
-                    ->delete();
 
-            if( $request->input('restourant') ){
-                foreach( $request->input('restourant') as $idx => $data ){
+            if( $request->exists('price.id') ){
+                foreach( $request->input('price.id') as  $idx => $data ){
+                    $restourant_id  = $request->input('price.restourant_id.'. $idx);
+                    $uprice          = $request->input('price.price.'. $idx);                    
                     $cprice = Price::where('food_id',$id)
-                                    ->where('restourant_id',$data)
+                                    ->where('restourant_id',$restourant_id)
                                     ->first();
 
                     $price = $cprice ? $cprice : new Price;
                     $price->food_id         = $food->id;
                     $price->category_id     = $request->input('groups');
-                    $price->restourant_id   = $data;
-                    $price->price           = $request->input('unit-price.'. $data);
+                    $price->restourant_id   = $restourant_id;
+                    $price->price           = $uprice;
                     $price->save();
+                    
                 }
-            }else{ 
-                Price::where('food_id',$id)
-                    ->delete();
             }
         }
         return redirect('foods/food');
+        
     }
 
     /**
@@ -212,28 +236,65 @@ class FoodController extends Controller
     }
 
     public function price($id = 0,$food_id = 0){
-        $rows = Restourant::where(\DB::raw("FIND_IN_SET($id, category_id)"),">",\DB::raw("'0'"))
-                            ->orderBy('restourant')
-                            ->get();
+
         $price = Price::where('food_id',$food_id)->get();
         $pres = [];
         $p = [];
         if($price){
             foreach($price as $pr){
                 $res_id = $pr->restourant_id;
-                $pres[$res_id] = [
+                $rest   = Restourant::where('id',$res_id)->first();
+                $pres[] = [
+                    'id'            => $pr->id,
                     'food_id'       => $pr->food_id,
                     'restourant_id' => $pr->restourant_id,
                     'category_id'   => $pr->category_id ,
-                    'price'         => $pr->price
+                    'price'         => $pr->price,
+                    'restourant'    => $rest->restourant
                 ];
             }
         }
         $data = [
-            'rows' => $rows,
-            'price' => $pres
+            'price' => @json_decode( @json_encode( $pres ) )
         ];
         return view('backend.food.food-price',$data);
+    }
+
+    public function restourant(Request $request,$id = 0){
+        $terms = $request->input('term');
+        //echo '<pre>', print_r( $request->all() ),'</pre> id => ' . $id .' | <br/>';
+        $autoData = [];
+        $rows = Restourant::where(\DB::raw("FIND_IN_SET($id, category_id)"),">",\DB::raw("'0'"))
+                            ->where( function($query) use ($terms){
+                                $terms = explode(' ', $terms);
+                                foreach( $terms as $no => $term ){
+                                    //echo 'term => ' . $term .'<br/>';
+                                    $query->where('restourant','like','%'. $term .'%');
+                                }
+                            })
+                            ->orderBy('restourant')
+                            ->skip(0)->take(24)->get();
+        if( $rows ){
+            foreach( $rows as $row ){
+                $autoData[] = [
+                    'value'         => $row->restourant,
+                    'label'         => $row->restourant,
+                    'id'            => $row->id,
+                    'groups'        => Category::groupName( @json_decode($row->category_id) ),
+                    'restourant'    => $row->restourant,
+                    'contact'       => $row->contact ,
+                    'tel'           => $row->tel,
+                    'image'         => $row->image,
+                    'thumb'         => Lib::exsImg( 'public/images/restourant' , $row->image ),
+                    'active'        => $row->active,
+                    'created'       => $row->created_at,
+                    'updated'       => $row->updated_at
+                            
+                ];
+            }
+        }
+
+        return response()->json($autoData);
     }
 
     public function price_list($food_id = 0){
@@ -242,5 +303,9 @@ class FoodController extends Controller
             'price' => $price
         ];
         return view('backend.food.food-price-list',$data);
+    }
+
+    public function priceRemove($id = 0){
+        Price::where('id', $id)->delete();
     }
 }

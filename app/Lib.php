@@ -132,7 +132,7 @@ class Lib
 			'waiting'		=>	'<span class="badge badge-pill badge-light">รอสินค้า</span>',
 			'shipment'		=>	'<span class="badge badge-pill badge-warning">ระหว่างจัดส่งสินค้า</span>',
 			'collecting'	=>	'<span class="badge badge-pill badge-info">รับสินค้า</span>',
-			'completed'		=>	'<span class="badge badge-pill badge-success">เรียบร้อยแล้ว</span>',
+			'finish'		=>	'<span class="badge badge-pill badge-success">เรียบร้อยแล้ว</span>',
 			'cancelled'		=>	'<span class="badge badge-pill badge-secondary">ยกเลิก</span>',
 		];
 		return @$label[$key];
@@ -151,7 +151,7 @@ class Lib
 			'waiting'		=>	'รอสินค้า',
 			'shipment'		=>	'ระหว่างจัดส่งสินค้า',
 			'collecting'	=>	'รับสินค้า',
-			'completed'		=>	'เรียบร้อยแล้ว',
+			'finish'		=>	'เรียบร้อยแล้ว',
 			'cancelled'		=>	'ยกเลิก',
 		];
 	}
@@ -180,7 +180,14 @@ class Lib
         }else{ 
             return $name;
         }
-    }
+	}
+	
+	public static function existsFile($path='',$filename=''){
+		$noimg = 'public/images/no-image.svg';
+		if($filename == '' || !file_exists($path . $filename )) return $noimg;
+		return $path . $filename;
+
+	}
 
   
 }

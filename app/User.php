@@ -45,8 +45,23 @@ class User extends Authenticatable
         $row = User::where('id',$id)->first();
         return $row ? $row->$field : '';
     }
-
-    public function attempt( $user ){
-
+    
+    public static function fieldRows( $row ){
+        return [
+                'id'                => $row->id ,
+                'username'          => $row->username ,
+                'email'             => $row->email ,
+                'facebook_id'       => $row->facebook_id ,
+                'google_id'         => $row->google_id ,
+                'password'          => $row->password ,
+                'name'              => $row->name ,
+                'tel'               => $row->tel ,
+                'level'             => $row->level ,
+                'user_type'         => $row->user_type ,
+                'active'            => $row->active ,
+                'remember_token'    => $row->remember_token ,
+                'created_at'        => $row->created_at ,
+                'updated_at'        => $row->updated_at
+        ];
     }
 }

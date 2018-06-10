@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $data = [
             '_breadcrumb'	=> 'Dashboard'
         ];
-        return view('backend.dashboard.index',$data);
+        return redirect('order');//view('backend.dashboard.index',$data);
     }
     //
 }

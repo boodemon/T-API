@@ -6,10 +6,24 @@
         <div class="pull-right">
             <button type="button" id="btn-new" data-id="0" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> New</button>
             <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa fa-trash"></i> Delete</button>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-filter"><i class="fa fa-filter"></i> FILTER</button>
+
         </div>
       </div>
       
       <div class="card-body">
+        @if( Request::exists('keywords') )
+                <div class="alert alert-primary">
+                    <p><strong><u>SEARCH RESULT</u></strong></p>
+                    <p>
+                        <strong>CATEGORY : </strong> {{ $category }} |
+                        @if( !empty( Request::input('keywords') ) )
+                        <strong>KEYWORDS : </strong> {{ Request::input('keywords') }} |
+                        @endif
+                        <strong>RESULT : </strong> {{ $rows->total() }} 
+                    </p>
+                </div>
+        @endif
         <table class="table table-sm table-data table-bordered">
           <thead>
             <tr>
@@ -31,7 +45,7 @@
                         <input type="checkbox" class="checkboxAll" value="{{ $row->id }}" >
                     </td>
                     <td>
-                        <img src="{{asset('public/images/foods/' . $row->food_image ) }}" class="img-responsive" width="120" />
+                        <img src="{{asset(Lib::existsFile('public/images/foods/' , $row->food_image) ) }}" class="img-responsive" width="120" />
                     </td>
                     <td>{{ $row->food_name }}</td>
                     <td class="text-right">{{ $row->kcal }} (kcal)</td>
@@ -57,6 +71,7 @@
 @endsection
 @section('modal')
     @include('backend.food.modal-price')
+    @include('backend.food.modal-filter')
 @endsection
 @section('javascript')
     <script src="{{ asset('public/build/js/food-index.js') }}"></script>

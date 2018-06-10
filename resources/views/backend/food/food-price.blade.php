@@ -1,31 +1,19 @@
-<h3>Restourant Price List</h3>
-<div class="form-group row">
-    <table class="table table-sm table-data table-bordered">
-          <thead>
-            <tr>
-                <th class="w20"><input type="checkbox" id="checkAll"/></th>
-                <th>Restourant</th>
-                <th class="w140">Unit/Price</th>
-            </tr>
-          </thead>
-          <tbody>
-              @if( $rows )
-              @foreach($rows as $row)
-              <tr>
-                <td class="text-center">
-                    <input type="checkbox" class="checkboxAll" {{ isset($price[ $row->id ]) ? 'checked': '' }} name="restourant[{{ $row->id }}]" value="{{ $row->id }}" >
-                </td>
-                <td>
-                    {{ $row->restourant }}
-                </td>
-                <td>
-                    <input type="text" class="form-control" name="unit-price[{{ $row->id }}]" value="{{  isset($price[ $row->id ]) ? $price[$row->id]['price']: 0 }}" />
-                </td>
-              </tr>
-              @endforeach
-              @endif
-            </tbody>
-        </table>
-
-</div>
-        
+@if( $price )
+    @foreach($price as $row)
+        <div class="col-sm-4 col-lg-4 restourant-panel">
+            <div class="card">
+                <div class="card-body">
+                    <input type="hidden" class="price-id" name="price['id'][]" value="{{ $row->id }}"/>
+                    <input type="hidden" class="price-restourant-id" name="price['restourant_id'][]" value="{{ $row->restourant_id }}"/>
+                    <input type="hidden" class="price-price" name="price['price'][]" value="{{ $row->price }}"/>
+                    <div class="text-value">Restourant : <strong class="restourant-name">{{ $row->restourant }}</strong></div>
+                    <div>Unit/Price : <strong  class="price-price">{{ $row->price }}</strong>.-</div>
+                    <div class="action">
+                        <a href="#" class="price-remove text-danger pull-right" data-id="{{ $row->id }}"><i class="fa fa-trash"></i></a>
+                        <a href="#" class="price-edit text-primary pull-right" data-id="{{ $row->id }}"><i class="fa fa-edit"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+@endif

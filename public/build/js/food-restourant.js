@@ -77,6 +77,18 @@
             });
         }
 
+        this.viewFood = function(id){
+            $.ajax({
+                url: _base + '/foods/restourant-food/' + id ,
+                method:'GET',
+                success:function(data){
+                    console.log('view food => ', data );
+                    $('#response-table').html(data);
+                }
+
+            })
+        }
+
 
     }
 
@@ -116,4 +128,18 @@
         });
         frm.delete(ids.join('-'));
     });
+
+    $('.viewFood').on('click',function(e){
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        frm.viewFood(id);
+        console.log('View food data');
+        $('#modal-foods').find('.modal-title').html('View Food of Restourant')
+        $('#modal-foods').modal('show');
+    });
+
+    $('.btn-filter').on('click',function(e){
+        $('#restourant-filter').modal('show');
+    });
+
 }(jQuery));

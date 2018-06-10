@@ -23,14 +23,50 @@ class OrderController extends Controller
 	public function __construct(){
         $this->user    = Auth::guard('admin')->user();
         $this->pdf_path = 'public/documents/order/';
+        $this->status = Lib::statusValue();
+        $this->field = ['id' => 'ORDER NO', 'jobname' => 'JOB NAME'];
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $rows = OrderHead::Active()->orderBy('updated_at','DESC')->paginate(50);
+        $rows = OrderHead::Active();
+        if( $request->exists('status') && !empty( $request->input('status') ) )
+            $rows = $rows->where('status',$request->input('status') );
+        if( $request->exists('keywords') && !empty( $request->input('keywords') ) ){
+            $keywords   = $request->input('keywords');
+            $field      = $request->input('field');
+            if( $field == 'id'){
+                $keywords = str_replace('#','',$keywords);
+                //$keywords = intval( $keywords);
+            }
+            $rows = $rows->where(function($query) use($keywords,$field){
+
+                    $keys = explode(' ', $keywords);
+
+                    foreach( $keys as $no => $key ){
+                        if( $field == 'id' ){
+                            $key = intval( $key );
+                            if(!empty( $key ))
+                            if( $no == 0 ){
+                                $query->where($field,'like','%' . $key .'%');
+                            }else{
+                                $query->orWhere($field,'like','%' . $key .'%');            
+                            }
+                        }else{
+                            $query->where($field,'like','%' . $key .'%');
+
+                        }
+                        //echo 'key = ' . $key .'<br/>';
+                    }
+            });
+        }
+        $rows = $rows->orderBy('updated_at','DESC')->paginate(50);
         $data = [
-            'rows' => $rows,
+            'rows'          => $rows,
+            'status'        => $this->status,
+            'field'         => $this->field,
             '_breadcrumb'	=> 'Order',
+
         ];
         return view('backend.order.index',$data);
     }

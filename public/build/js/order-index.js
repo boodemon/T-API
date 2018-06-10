@@ -97,4 +97,8 @@ function orders(){
             $('#modal-tracking').modal('show');
         });
 
+        $('.btn-filter').on('click',function(e){
+            $('#order-filter').modal('show');
+        });
+
 }(jQuery));

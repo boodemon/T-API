@@ -17,6 +17,7 @@ use App\Models\Tracking;
 use App\Models\Message;
 use App\Models\Bank;
 use App\Models\Attach;
+use App\Models\Rating;
 use Image;
 class OrderController extends Controller
 {
@@ -99,13 +100,17 @@ class OrderController extends Controller
         $onList =  $request->input('onList');
         if( $onList ){
             foreach( $onList as $idx=>$input){
+                $food_id        = $request->input('onList.' . $idx . '.food_id');
+                $restourant_id  = $request->input('onList.' . $idx . '.restourant_id');
                 $item = new OrderDetail;
                 $item->order_id         = $row->id;
                 $item->user_id          = $request->input('onList.' . $idx . '.userId');
                 $item->category_id      = $request->input('onList.' . $idx . '.category_id');
                 $item->price_id         = $request->input('onList.' . $idx . '.price_id');
-                $item->food_id          = $request->input('onList.' . $idx . '.food_id');
-                $item->restourant_id    = $request->input('onList.' . $idx . '.restourant_id');
+                $item->food_id          = $food_id;
+                $item->food_name        = Food::field( $food_id );
+                $item->restourant_id    = $restourant_id;
+                $item->restourant_name  = Restourant::field( $restourant_id );
                 $item->qty              = $request->input('onList.' . $idx . '.quantity');
                 $item->per_price        = $request->input('onList.' . $idx . '.price');
                 $item->total_price      = $request->input('onList.' . $idx . '.price') * $request->input('onList.' . $idx . '.quantity');
@@ -151,6 +156,7 @@ class OrderController extends Controller
     }
 
     public function headField($row){
+
         return [
             'id'         =>  $row->id ,
             'code'       =>  sprintf('%05d',$row->id),
@@ -164,9 +170,12 @@ class OrderController extends Controller
             'charge'     =>  $row->charge ,
             'tax'        =>  $row->tax ,
             'status'     =>  $row->status ,
+            'status_name'     =>  Lib::statusText( $row->status ) ,
             'created_at' =>  date('Y-m-d H:i:s', strtotime( $row->created_at ) ) ,
             'updated_at' =>  date('Y-m-d H:i:s', strtotime( $row->updated_at ) ),
             'tracking'   =>  $this->tracking( $row->id ),
+            'rating'     =>  @json_decode( Rating::Score( $row->id, 'order' ) )
+
         ];
     }
     public function detailField($row){
@@ -185,7 +194,8 @@ class OrderController extends Controller
             'total_price'   =>  $row->total_price ,
             'remark'        =>  $row->remark ,
             'created_at'    =>  date('Y-m-d H:i:s', strtotime( $row->created_at ) ) ,
-            'updated_at'    =>  date('Y-m-d H:i:s', strtotime( $row->updated_at ) )
+            'updated_at'    =>  date('Y-m-d H:i:s', strtotime( $row->updated_at ) ),
+            'rating'        =>  @json_decode( Rating::Score( $row->price_id, 'detail' ) )
         ];
     }
 
